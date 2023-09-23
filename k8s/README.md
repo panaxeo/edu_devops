@@ -1,0 +1,1 @@
+This folder contains Kubernetes configuration files.
