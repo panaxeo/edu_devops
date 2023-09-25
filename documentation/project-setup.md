@@ -13,6 +13,7 @@
     * Remote - SSH (ms-vscode-remote.remote-ssh)
     * Code Spell Checker (streetsidesoftware.code-spell-checker)
     * markdownlint (DavidAnson.vscode-markdownlint)
+    * YAML (redhat.vscode-yaml)
 * Terminal: powershell 7
   * kubectl extensions: kubectx, kubens
   * VS Code config
