@@ -1,42 +1,39 @@
+<script setup lang="ts">
+defineProps<{
+  msg: string
+}>()
+</script>
+
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>{{ count }}</p>
-    <button @click="increment">Add follower</button>
+  <div class="greetings">
+    <h1 class="green">{{ msg }}</h1>
+    <h3>
+      Home of Panaxeo edu devops
+    </h3>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Panaxeo edu devops!',
-      count: 0
-    }
-  },
-  methods: {
-    increment () {
-      this.count++
-    }
-  }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+h1 {
+  font-weight: 500;
+  font-size: 2.6rem;
+  position: relative;
+  top: -10px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+h3 {
+  font-size: 1.2rem;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.greetings h1,
+.greetings h3 {
+  text-align: center;
 }
-a {
-  color: #42b983;
+
+@media (min-width: 1024px) {
+  .greetings h1,
+  .greetings h3 {
+    text-align: left;
+  }
 }
 </style>
