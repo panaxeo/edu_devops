@@ -14,6 +14,10 @@
     * Code Spell Checker (streetsidesoftware.code-spell-checker)
     * markdownlint (DavidAnson.vscode-markdownlint)
     * YAML (redhat.vscode-yaml)
+    * Vue Language Features - Volar (Vue.volar) + [Take Over Mode](<https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode>)
+    * ESlint (dbaeumer.vscode-eslint)
+    * Prettier ESLint (rvest.vs-code-prettier-eslint)
+    * Go (golang.go)
 * Terminal: powershell 7
   * kubectl extensions: kubectx, kubens
   * VS Code config
@@ -43,3 +47,5 @@
   * update hosts file (windows)
   * setup password-less ssh with public/private keys
 * Kubernetes: Rancher desktop + containerd with nerdctl
+* Node.js
+* Go
