@@ -17,7 +17,7 @@ helm install gitea gitea-charts/gitea \
 
 gitea is running on localhost:30007 \
 username: gitea \
-password: gitea
+password: gitea123!
 
 1. create repository:
 frontend-devops-app
