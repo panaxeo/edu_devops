@@ -1,0 +1,27 @@
+postgresql:
+  enabled: true
+  primary:
+    persistence:
+      size: 1Gi
+
+postgresql-ha:
+  enabled: false
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+service:
+  http:
+    type: NodePort
+    nodePort: 30007
+    externalTrafficPolicy: Local
+
+gitea:
+  admin:
+    username: gitea
+    password: gitea
+    email: "gitea@gitea.com"
+    # existingSecret: TODO:
+
+# ingress: TODO:

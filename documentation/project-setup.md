@@ -18,6 +18,7 @@
     * ESlint (dbaeumer.vscode-eslint)
     * Prettier ESLint (rvest.vs-code-prettier-eslint)
     * Go (golang.go)
+    * TODO Highlight (wayou.vscode-todo-highlight)
 * Terminal: powershell 7
   * kubectl extensions: kubectx, kubens
   * VS Code config
@@ -49,3 +50,8 @@
 * Kubernetes: Rancher desktop + containerd with nerdctl
 * Node.js
 * Go
+* Helm CLI
+
+  ```sh
+  choco install kubernetes-helm
+  ```
