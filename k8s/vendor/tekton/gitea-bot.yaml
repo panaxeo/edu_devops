@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gitea-bot
+  namespace: tekton-development
+secrets:
+  - name: gitea-secret

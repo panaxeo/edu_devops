@@ -13,4 +13,5 @@ spec:
   ports:
     - port: 8080
       targetPort: 80
+      nodePort: 30002
       # Kubernetes control plane will allocate a port from a range (default: 30000-32767)

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dockerhub-bot
+  namespace: tekton-development
+secrets:
+  - name: regcred # the secret has to exist also in tekton-development namespace

@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: build-run-
+  namespace: tekton-development
+spec:
+  serviceAccountName: gitea-bot
+  taskRunSpecs:
+    - pipelineTaskName: build-push-image
+      taskServiceAccountName: dockerhub-bot
+  pipelineRef:
+    name: build
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  params:
+  - name: repo-url
+    value: http://gitea-http.gitea:3000/gitea/frontend-devops-app.git
+  - name: image-reference
+    value: pnxedudevops/apps:frontend-latest-pipeline-run

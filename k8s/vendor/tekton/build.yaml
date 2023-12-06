@@ -1,0 +1,94 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build
+  namespace: tekton-development
+spec:
+  description: |
+    This pipeline clones a git repo
+  params:
+  - name: repo-url
+    type: string
+    description: The git repo URL to clone from.
+  - name: image-reference
+    type: string
+  workspaces:
+  - name: shared-data
+    description:
+      This workspace contains the cloned repo files
+  tasks:
+  - name: fetch-source
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-data
+    params:
+    - name: url
+      value: $(params.repo-url)
+  - name: npm-install
+    taskRef:
+      name: npm
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: IMAGE
+        value: node:lts-alpine
+      - name: PATH_CONTEXT
+        value: "app"
+      - name: ARGS
+        value: ["install"]
+    runAfter: ["fetch-source"]
+  - name: run-build
+    taskRef:
+      name: npm
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: IMAGE
+        value: node:lts-alpine
+      - name: PATH_CONTEXT
+        value: "app"
+      - name: ARGS
+        value: ["run", "build"]
+    runAfter: ["npm-install"]
+  - name: run-lint
+    taskRef:
+      name: npm
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: IMAGE
+        value: node:lts-alpine
+      - name: PATH_CONTEXT
+        value: "app"
+      - name: ARGS
+        value: ["run", "lint"]
+    runAfter: ["run-build"]
+  - name: run-test
+    taskRef:
+      name: npm
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: IMAGE
+        value: node:lts-alpine
+      - name: PATH_CONTEXT
+        value: "app"
+      - name: ARGS
+        value: ["run", "test"]
+    runAfter: ["run-build"]
+  - name: build-push-image
+    runAfter: ["run-lint", "run-test"]
+    taskRef:
+      name: kaniko
+    workspaces:
+    - name: source
+      workspace: shared-data
+    params:
+    - name: IMAGE
+      value: $(params.image-reference)
