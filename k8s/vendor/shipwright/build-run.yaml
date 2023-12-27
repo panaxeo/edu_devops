@@ -1,0 +1,10 @@
+apiVersion: shipwright.io/v1alpha1
+kind: BuildRun
+metadata:
+  generateName: frontend-app-build-
+  namespace: shipwright-build
+spec:
+  buildRef:
+    name: frontend-app-build
+  output:
+    image: docker.io/pnxedudevops/apps:frontend-latest

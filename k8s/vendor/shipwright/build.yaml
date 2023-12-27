@@ -1,0 +1,19 @@
+apiVersion: shipwright.io/v1alpha1
+kind: Build
+metadata:
+  name: frontend-app-build
+  namespace: shipwright-build
+spec:
+  retention:
+    ttlAfterFailed: 10m
+    ttlAfterSucceeded: 10m
+  source:
+    url: http://gitea-http.gitea:3000/gitea/frontend-devops-app
+    # revision: main # main is default
+  strategy:
+    name: kaniko
+    kind: ClusterBuildStrategy
+  output:
+    image: docker.io/pnxedudevops/apps:frontend-latest
+    credentials:
+      name: regcred
