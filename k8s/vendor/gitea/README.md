@@ -29,3 +29,9 @@ frontend-devops-app
 
 3. copy our frontend app to cloned repo
 4. push changes
+
+```sh
+openssl req -x509 -newkey rsa:2048 -keyout tls.key -out tls.crt -days 365 -nodes -subj "/C=SK/ST=Slovakia/L=Senec/O=Pnx/CN=gitealocal" -addext "subjectAltName = DNS:gitealocal"
+
+kubectl create secret tls gitea-tls-secret -n gitea --cert=tls.crt --key=tls.key
+```

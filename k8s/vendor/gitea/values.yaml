@@ -13,9 +13,9 @@ persistence:
 
 service:
   http:
-    type: NodePort
-    nodePort: 30007
-    externalTrafficPolicy: Local
+    type: ClusterIP
+    port: 3000
+    clusterIP: None
 
 gitea:
   admin:
@@ -23,5 +23,3 @@ gitea:
     password: gitea123!
     email: "gitea@gitea.com"
     # existingSecret: TODO:
-
-# ingress: TODO:

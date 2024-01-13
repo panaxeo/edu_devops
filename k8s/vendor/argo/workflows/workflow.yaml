@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: build-push-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+spec:
+  entrypoint: full
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: regcred
+      items:
+        - key: .dockerconfigjson
+          path: config.json
+  - name: cert-volume
+    configMap:
+      name: gitea-cert
+  templates:
+  - name: full
+    dag:
+      tasks:
+      - name: build-container-image
+        templateRef:
+          name: container-image
+          template: build-kaniko-git
+          clusterScope: true
+        arguments:
+          parameters:
+          - name: app_repo
+            value: git://gitealocal/gitea/frontend-devops-app.git
+          - name: container_image
+            value: pnxedudevops/apps
+          - name: container_tag
+            value: frontend-latest
