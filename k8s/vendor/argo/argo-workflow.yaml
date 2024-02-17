@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: container-
+  namespace: argo
+spec:
+  entrypoint: git-clone
+  templates:
+  - name: git-clone
+    inputs:
+      artifacts:
+      - name: argo-source
+        path: /src
+        git:
+          repo: http://gitea-http.gitea:3000/gitea/frontend-devops-app.git
+          insecureIgnoreHostKey: true
+          singleBranch: true
+          branch: master
+          usernameSecret:
+            name: git-creds
+            key: username
+          passwordSecret:
+            name: git-creds
+            key: password
+    container:
+      image: node:lts-alpine
+      command: [sh, -c]
+      args: ["cd /src; ls; npm install; npm run build; npm run lint; npm test"]
+      workingDir: /src
