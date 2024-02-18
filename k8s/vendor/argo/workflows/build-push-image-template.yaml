@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: build-image-template
+spec:
+  templates:
+  - name: build-image
+    container:
+      image: gcr.io/kaniko-project/executor:debug
+      command: [/kaniko/executor]
+      args:
+      - --context=/mnt/clone
+      - --destination=pnxedudevops/apps:frontend-latest
+      volumeMounts:
+      - name: kaniko-secret
+        mountPath: /kaniko/.docker/
+      - name: workdir
+        mountPath: /mnt/clone
