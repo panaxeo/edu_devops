@@ -22,6 +22,9 @@ gitea:
     username: gitea
     password: gitea123!
     email: "gitea@gitea.com"
+  additionalConfigSources:
+    - configMap:
+        name: gitea-app-ini-plaintext
     # existingSecret: TODO:
 
 # ingress: TODO:

@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook
+  namespace: argo-development
+spec:
+  template:
+    serviceAccountName: operate-workflow-sa
+  dependencies:
+    - name: dependency-one
+      eventSourceName: webhook
+      eventName: example
+  triggers:
+    - template:
+        name: webhook-workflow-trigger
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: ci-pipeline-
+              spec:
+                workflowTemplateRef:
+                  name: ci-pipeline-template
+# TODO: set workflow params from webhook request e.g.
+        #   parameters:
+        #     - src:
+        #         dependencyName: dependency-one
+        #         dataKey: body.after
+        #       dest: spec.templates.0.dag.tasks.0.arguments.parameters.2.value
+        #       name: test

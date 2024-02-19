@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: git-creds
-  namespace: argo
+  namespace: argo-development
 type: Opaque
 stringData:
   username: gitea

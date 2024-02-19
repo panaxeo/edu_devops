@@ -1,13 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: npm-lint-template
+  name: npm-build-template
+  namespace: argo-development
 spec:
   templates:
-  - name: npm-lint
+  - name: npm-build
     container:
       image: node
-      command: [npm, run, lint]
+      command: [npm, run, build]
       workingDir: /mnt/clone
       volumeMounts:
       - name: workdir

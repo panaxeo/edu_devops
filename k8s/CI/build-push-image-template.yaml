@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: build-push-image-template
+  namespace: argo-development
 spec:
   templates:
   - name: build-push-image
