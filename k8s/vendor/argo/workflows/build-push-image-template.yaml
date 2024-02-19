@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: build-image-template
+  name: build-push-image-template
 spec:
   templates:
-  - name: build-image
+  - name: build-push-image
     container:
       image: gcr.io/kaniko-project/executor:debug
       command: [/kaniko/executor]

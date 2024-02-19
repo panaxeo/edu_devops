@@ -47,8 +47,8 @@ spec:
           name: npm-test-template
           template: npm-test
         dependencies: [npm-install]
-      - name: build-image
+      - name: build-push-image
         templateRef:
-          name: build-image-template
-          template: build-image
+          name: build-push-image-template
+          template: build-push-image
         dependencies: [npm-build, npm-lint, npm-test]
