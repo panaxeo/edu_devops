@@ -15,7 +15,7 @@ func setupRouter() *gin.Engine {
 	router := gin.Default()
 	router.SetTrustedProxies([]string{"127.0.0.1"})
 	router.Use(cors.Default())
-	router.GET("/", func(c *gin.Context) {
+	router.GET("/welcome", func(c *gin.Context) {
 		c.IndentedJSON(http.StatusOK, getMessage())
 	})
 

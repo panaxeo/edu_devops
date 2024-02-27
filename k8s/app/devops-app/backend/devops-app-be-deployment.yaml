@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: devops-app-backend-container
-        image: pnxedudevops/apps:backend-latest
+        image: pnxedudevops/apps:backend-welcome
         resources:
           limits:
             memory: "256Mi"

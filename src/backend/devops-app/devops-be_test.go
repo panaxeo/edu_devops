@@ -13,7 +13,7 @@ func TestHomeRoute_WillReturnWelcomeMessage(t *testing.T) {
 	router := setupRouter()
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/", nil)
+	req, _ := http.NewRequest("GET", "/welcome", nil)
 	router.ServeHTTP(w, req)
 
 	expectedResult := getMessage()

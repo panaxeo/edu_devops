@@ -4,10 +4,10 @@ import HelloWorld from '../components/HelloWorld.vue'
 import axios from 'axios'
 
 const greetingMsg = ref("Welcome from vue!")
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'http://localhost:30002';
 
 async function getGreeting() {
-  axios.get('/').then(response => {
+  axios.get('/welcome').then(response => {
     greetingMsg.value = response.data
   }).catch(error => {
     console.error(error)
@@ -18,7 +18,7 @@ async function getGreeting() {
 <template>
   <div class="home">
     <HelloWorld :msg="greetingMsg"/>
-    <button @click="getGreeting">Get greeting message from server</button>
+    <button @click="getGreeting">Get greeting message from server in k8s</button>
   </div>
 </template>
 

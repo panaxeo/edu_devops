@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: devops-app-frontend-container
-        image: pnxedudevops/apps:frontend-latest
+        image: pnxedudevops/apps:frontend-clusterip-test2
         resources:
           limits:
             memory: "128Mi"

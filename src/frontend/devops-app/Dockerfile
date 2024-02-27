@@ -19,6 +19,11 @@ RUN npm run build
 
 # Production stage. It is responsible for serving such artifact using NGINX
 FROM nginx:stable-alpine as production-stage
+
+# Copy nginx configuration file
+COPY frontend-nginx.conf /etc/nginx/nginx.conf
+
+RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /devops-app/dist /usr/share/nginx/html
 EXPOSE 80
 
