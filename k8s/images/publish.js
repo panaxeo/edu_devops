@@ -45,13 +45,13 @@ function getGitCommitHash() {
     });
 }
 
-async function main() {
+async function buildImage(app) {
     const username = 'pnxedudevops';
     const repository = 'apps';
     const gitSHA = await getGitCommitHash();
-    const contextPath = `${__dirname}/../../src/frontend/devops-app`;
-    const latestTag = 'frontend-latest';
-    const gitCommitTag = `frontend-${gitSHA}`
+    const contextPath = `${__dirname}/../../src/${app}/devops-app`;
+    const latestTag = `${app}-latest`;
+    const gitCommitTag = `${app}-${gitSHA}`
     const latestImageName = `${username}/${repository}:${latestTag}`;
     const commitImageName = `${username}/${repository}:${gitCommitTag}`;
 
@@ -67,12 +67,17 @@ async function main() {
         await executeCommand(cli, ['push', `${latestImageName}`]);
         console.log('Docker push successful.');
 
-        console.log(`Running: ${cli} push ${latestImageName}`);
+        console.log(`Running: ${cli} push ${commitImageName}`);
         await executeCommand(cli, ['push', `${commitImageName}`]);
         console.log('Docker push successful.');
     } catch (error) {
         console.error(error);
     }
+}
+
+async function main() {
+    await buildImage('frontend');
+    await buildImage('backend');
 }
 
 main();

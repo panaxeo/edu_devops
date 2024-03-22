@@ -15,7 +15,7 @@ spec:
       args:
       - --context=/mnt/clone
       - --destination=pnxedudevops/apps:frontend-latest
-      - --destination=pnxedudevops/apps:{{inputs.parameters.container_tag}}
+      - --destination=pnxedudevops/apps:frontend-{{inputs.parameters.container_tag}}
       volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker/

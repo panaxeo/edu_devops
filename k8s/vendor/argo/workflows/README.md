@@ -14,7 +14,23 @@ kubectl patch deployment argo-server --namespace argo --type='json' -p='[{"op": 
 
     ```
 
-    ```bash Run UI - https://localhost:2746/
-kubectl -n argo port-forward deployment/argo-server 2746:2746
-kubectl -n argo port-forward service/argo-server 2746:2746
+## http
+
+    ```bash
+kubectl -n argo patch deployment argo-server --type='json' -p='[
+   {
+     "op": "add",
+     "path": "/spec/template/spec/containers/0/args/-",
+     "value": "--secure=false"
+   },
+   {
+     "op": "replace",
+     "path": "/spec/template/spec/containers/0/readinessProbe/httpGet/scheme",
+     "value": "HTTP"
+   }
+ ]'
+    ```
+
+    ```bash
+    kubectl apply -f ingress-route.yaml
     ```

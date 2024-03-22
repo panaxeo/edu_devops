@@ -24,5 +24,5 @@ func setupRouter() *gin.Engine {
 
 func main() {
 	router := setupRouter()
-	router.Run("localhost:8080")
+	router.Run(":8080")
 }

@@ -9,13 +9,23 @@ helm repo update
 ```
 
 ```sh
-helm install gitea gitea-charts/gitea \
---values values.yaml \
---namespace gitea \
---create-namespace
+kubectl apply -f config-map.yaml
 ```
 
-gitea is running on localhost:30007 \
+```sh
+helm install gitea gitea-charts/gitea --values values.yaml --namespace gitea --create-namespace
+```
+
+- for ingress on <http://cluster.gitea.local/> add this line to C:\Windows\System32\drivers\etc
+
+    1. ```text
+        <node IP> cluster.gitea.local
+        ```
+
+    2. ```sh
+        kubectl apply -f ingress-route.yaml
+        ```
+
 username: gitea \
 password: gitea123!
 
@@ -24,7 +34,7 @@ frontend-devops-app
 2. clone new repository outside this repo:
 
     ```sh
-    git clone http://localhost:30007/gitea/frontend-devops-app.git
+    git clone http://cluster.gitea.local/gitea/frontend-devops-app.git
     ```
 
 3. copy our frontend app to cloned repo
