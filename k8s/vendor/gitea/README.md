@@ -9,13 +9,15 @@ helm repo update
 ```
 
 ```sh
-helm install gitea gitea-charts/gitea \
---values values.yaml \
---namespace gitea \
---create-namespace
+helm install gitea gitea-charts/gitea --values values.yaml --namespace gitea --create-namespace
 ```
 
-gitea is running on localhost:30007 \
+- for ingress on <http://gitea> add this line to C:\Windows\System32\drivers\etc
+
+```text
+<node IP> gitea
+```
+
 username: gitea \
 password: gitea123!
 

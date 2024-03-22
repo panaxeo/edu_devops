@@ -15,6 +15,5 @@ kubectl patch deployment argo-server --namespace argo --type='json' -p='[{"op": 
     ```
 
     ```bash Run UI - https://localhost:2746/
-kubectl -n argo port-forward deployment/argo-server 2746:2746
-kubectl -n argo port-forward service/argo-server 2746:2746
+kubectl -n argo patch svc argo-server -p '{"spec": {"type": "LoadBalancer"}}'
     ```

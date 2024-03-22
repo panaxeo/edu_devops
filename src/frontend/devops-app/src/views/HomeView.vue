@@ -4,7 +4,7 @@ import HelloWorld from '../components/HelloWorld.vue'
 import axios from 'axios'
 
 const greetingMsg = ref("Welcome from vue!")
-axios.defaults.baseURL = 'http://localhost:30001';
+axios.defaults.baseURL = 'http://backend';
 
 async function getGreeting() {
   axios.get('/').then(response => {
