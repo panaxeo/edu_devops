@@ -18,6 +18,7 @@ spec:
       containers:
       - name: devops-app-frontend-container
         image: pnxedudevops/apps:frontend-latest
+        # imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"

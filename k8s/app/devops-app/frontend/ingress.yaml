@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devops-app-frontend
+  namespace: development
+spec:
+  ingressClassName: traefik-lb
+  rules:
+    - host: frontend
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: devops-app-frontend
+                port:
+                  number: 8080

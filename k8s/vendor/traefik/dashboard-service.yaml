@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-dashboard-service
+  namespace: ingress-traefik
+spec:
+  selector:
+    app: traefik
+  ports:
+    - port: 8080
+      targetPort: dashboard
