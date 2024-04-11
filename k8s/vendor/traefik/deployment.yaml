@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: traefik-deployment
+  name: traefik
   namespace: ingress-traefik
   labels:
     app: traefik
@@ -15,13 +15,15 @@ spec:
       labels:
         app: traefik
     spec:
-      serviceAccountName: traefik-account
+      serviceAccountName: traefik-ingress-controller
       containers:
         - name: traefik
           image: traefik:v2.11
           args:
+            - --log.level=DEBUG
             - --api.insecure
-            - --providers.kubernetesingress
+            - --entrypoints.web.address=:80
+            - --providers.kubernetescrd
           ports:
             - name: web
               containerPort: 80

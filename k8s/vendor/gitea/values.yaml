@@ -25,13 +25,3 @@ gitea:
     - configMap:
         name: gitea-app-ini-plaintext
     # existingSecret: TODO:
-
-ingress:
-  enabled: true
-  className: traefik-lb
-  annotations: {}
-  hosts:
-    - host: gitea
-      paths:
-        - path: /
-          pathType: Prefix

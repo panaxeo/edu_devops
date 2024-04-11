@@ -1,6 +1,12 @@
 # README
 
-- The first step is to create namespace.
+- The first step is to install Traefik CRDs.
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.11/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+```
+
+- The next step is to create a namespace
 
 ```sh
 kubectl apply -f namespace.yaml
@@ -39,13 +45,13 @@ kubectl apply -f ingress-class.yaml
 ```
 
 - (optional) Traefik dashboard
-    1. for ingress on <http://traefik> add this line to C:\Windows\System32\drivers\etc
+    1. for ingress on <http://cluster.traefik.local> add this line to C:\Windows\System32\drivers\etc
 
         ```text
-        <node IP> traefik
+        <node IP> cluster.traefik.local
         ```
 
     2. ```sh
         kubectl apply -f dashboard-service.yaml
-        kubectl apply -f ingress.yaml
+        kubectl apply -f ingress-route.yaml
         ```
