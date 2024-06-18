@@ -67,7 +67,7 @@ async function buildImage(app) {
         await executeCommand(cli, ['push', `${latestImageName}`]);
         console.log('Docker push successful.');
 
-        console.log(`Running: ${cli} push ${latestImageName}`);
+        console.log(`Running: ${cli} push ${commitImageName}`);
         await executeCommand(cli, ['push', `${commitImageName}`]);
         console.log('Docker push successful.');
     } catch (error) {

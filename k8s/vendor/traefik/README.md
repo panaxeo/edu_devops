@@ -3,7 +3,7 @@
 - The first step is to install Traefik CRDs.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.11/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.0/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
 ```
 
 - The next step is to create a namespace
