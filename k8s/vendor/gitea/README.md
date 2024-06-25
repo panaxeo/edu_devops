@@ -9,11 +9,11 @@ helm repo update
 ```
 
 ```sh
-helm install gitea gitea-charts/gitea --values values.yaml --namespace gitea --create-namespace
+kubectl apply -f config-map.yaml
 ```
 
 ```sh
-kubectl apply -f config-map.yaml
+helm install gitea gitea-charts/gitea --values values.yaml --namespace gitea --create-namespace
 ```
 
 - for ingress on <http://cluster.gitea.local/> add this line to C:\Windows\System32\drivers\etc
@@ -23,7 +23,6 @@ kubectl apply -f config-map.yaml
         ```
 
     2. ```sh
-        kubectl apply -f dashboard-service.yaml
         kubectl apply -f ingress-route.yaml
         ```
 

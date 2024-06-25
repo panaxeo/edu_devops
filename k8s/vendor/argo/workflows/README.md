@@ -30,3 +30,7 @@ kubectl -n argo patch deployment argo-server --type='json' -p='[
    }
  ]'
     ```
+
+    ```bash
+    kubectl apply -f ingress-route.yaml
+    ```
