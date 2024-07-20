@@ -25,7 +25,6 @@ kubectl apply -n argo-development -f https://raw.githubusercontent.com/argoproj/
 
 ```sh
 kubectl apply -f .
-kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=pnxedudevops --docker-password=<password> --docker-email=pnx.edu.devops@gmail.com -n argo-development
 ```
 
 - Create webhook in gitea

@@ -2,6 +2,9 @@
 
 ```bash
     kubectl apply -f ../namespace.yaml
+    kubectl apply -f ../service-account.yaml
+    kubectl apply -f ../secret-store.yaml
+    kubectl apply -f ../external-secret.yaml
 ```
 
 ```bash
