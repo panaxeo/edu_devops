@@ -26,5 +26,4 @@ spec:
         ports:
         - containerPort: 8080
       imagePullSecrets:
-      # It has to be created manually, check 'create secret' command in README.md
       - name: regcred

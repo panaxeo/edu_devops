@@ -10,6 +10,9 @@ helm repo update
 
 ```sh
 kubectl apply -f config-map.yaml
+kubectl apply -f service-account.yaml
+kubectl apply -f secret-store.yaml
+kubectl apply -f external-secret.yaml
 ```
 
 ```sh
