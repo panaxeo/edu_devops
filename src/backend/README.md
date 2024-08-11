@@ -12,9 +12,12 @@ go run .
 go test
 ```
 
-## Resolving dependencies by:
+## Resolving dependencies by
+
 # - deleting packages that are not needed
+
 # - downloading those needed
+
 # - updating the go.sum
 
 ```sh

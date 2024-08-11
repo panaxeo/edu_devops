@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/panaxeo/edu_devops.git
+    targetRevision: {{TARGET_BRANCH}} # do not commit to main branch
+    path: k8s/app-of-apps-chart
+    helm:
+      valueFiles:
+      - values-dev.yaml
+      - {{YOUR_VALUES_FILE}} # do not commit to main branch
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

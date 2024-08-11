@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: npm-install-template
+spec:
+  templates:
+  - name: npm-install
+    container:
+      image: node
+      command: [npm, install]
+      workingDir: /mnt/clone/devops-app
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/clone/devops-app

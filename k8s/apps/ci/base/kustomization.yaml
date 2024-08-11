@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/eventbus/native.yaml
+- https://raw.githubusercontent.com/argoproj/argo-events/master/examples/rbac/sensor-rbac.yaml
+- https://raw.githubusercontent.com/argoproj/argo-events/master/examples/rbac/workflow-rbac.yaml
+- build-push-image-template.yaml
+- ci-pipeline-template.yaml
+- clone-app-repo-template.yaml
+- clone-k8s-repo-template.yaml
+- update-image-tag-template.yaml
+- push-changes-template.yaml
+- event-source-service.yaml
+- event-source.yaml
+- npm-build-template.yaml
+- npm-install-template.yaml
+- npm-lint-template.yaml
+- npm-test-template.yaml
+- sensor.yaml

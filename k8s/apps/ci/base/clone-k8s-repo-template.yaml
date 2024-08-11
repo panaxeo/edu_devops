@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: clone-k8s-repo-template
+spec:
+  templates:
+  - name: clone-k8s-repo
+    container:
+      image: alpine/git
+      command: [sh, -c]
+      args: ["git clone http://$GIT_USERNAME:$GIT_PASSWORD@gitea-http.gitea:3000/gitea/k8s.git /mnt/clone/k8s"]
+      volumeMounts:
+      - name: workdir2
+        mountPath: /mnt/clone/k8s
+      env:
+      - name: GIT_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: gitcred
+            key: username
+      - name: GIT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: gitcred
+            key: password

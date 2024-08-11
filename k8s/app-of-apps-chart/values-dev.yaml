@@ -1,0 +1,16 @@
+targetRevision: main
+argoCD:
+  overlay: dev
+argoEvents:
+  overlay: dev
+argoWorkflows:
+  overlay: dev
+ci:
+  overlay: dev
+devopsApp:
+  overlay: dev
+gitea:
+  helmValues: []
+traefik:
+  port: 8081
+  overlay: dev
