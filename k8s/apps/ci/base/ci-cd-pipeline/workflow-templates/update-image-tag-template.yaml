@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: update-image-tag-template
+spec:
+  templates:
+  - name: update-image-tag
+    inputs:
+      parameters:
+      - name: container_tag
+    container:
+      image: mikefarah/yq:4
+      command: [sh, -c]
+      workingDir: /mnt/clone/k8s/base/frontend
+      args:
+        - |
+          yq eval '.spec.template.spec.containers[0].image = "pnxedudevops/apps:frontend-{{inputs.parameters.container_tag}}"' -i ./devops-app-frontend-deployment.yaml
+      volumeMounts:
+      - name: workdir2
+        mountPath: /mnt/clone/k8s

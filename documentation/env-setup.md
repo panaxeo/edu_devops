@@ -19,6 +19,7 @@
     * Prettier ESLint (rvest.vs-code-prettier-eslint)
     * Go (golang.go)
     * TODO Highlight (wayou.vscode-todo-highlight)
+    * vscode-helm
 * Terminal: powershell 7
   * kubectl extensions: kubectx, kubens
   * VS Code config
@@ -55,3 +56,17 @@
   ```sh
   choco install kubernetes-helm
   ```
+
+* Download Argo CD CLI - Linux (optional)
+
+  Download latest stable version
+
+  ```sh
+  VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION)
+  curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v$VERSION/argocd-linux-amd64
+  sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+  rm argocd-linux-amd64
+  ```
+
+* kubeseal CLI
+  * run ./scripts/kubeseal-windows-installer/Install-Kubeseal.ps1

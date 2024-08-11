@@ -1,0 +1,45 @@
+envs:
+- name: dev
+  targetRevision: main
+  apps:
+    argoCd:
+      overlay: dev
+    argoEvents:
+      overlay: dev
+    argoWorkflows:
+      overlay: dev
+    ci:
+      overlay: dev
+    devopsApp:
+      overlay: dev
+    gitea:
+      helmValues: []
+    traefik:
+      overlay: dev
+- name: dev-mkoplinger
+  targetRevision: dev-mkoplinger
+  apps:
+    gitea:
+      helmValues:
+      - dev-mkoplinger
+    traefik:
+      overlay: dev-mkoplinger
+
+secrets:
+- name: regcred
+  type: docker-registry
+  apps: [devops-app, ci]
+  docker:
+    server: https://index.docker.io/v1/
+    username: pnxedudevops
+    email: pnx.edu.devops@gmail.com
+- name: argocd-initial-admin-secret
+  secretNamespaceRef: argocd
+  apps: [ci]
+- name: gitcred
+  type: generic
+  apps: [gitea, ci]
+  literals:
+  - key: username
+    value: gitea
+  - key: password
