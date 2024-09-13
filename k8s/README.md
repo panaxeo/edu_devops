@@ -135,6 +135,11 @@
   - add new overlay to values-{{OVERLAY}}.yaml file in ./app-of-apps-chart
   - push changes to your branch
 
+    ```yaml
+    traefik:
+        overlay: dev-jozko-kukuricudus
+    ```
+  
 - (optional) For helm charts create your own values to overwrite default values
   - e.g. ./k8s/apps/gitea/values-dev-jozko-kukuricudus.yaml
   - update your values file ./k8s/app-of-apps-chart/values-dev-jozko-kukuricudus.yaml
