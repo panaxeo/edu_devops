@@ -1,6 +1,6 @@
 # README
 
-1. Create new git branch (from main) e.g. dev-jozko-kukuricudus and checkout into it
+1. Create new git branch (from main) e.g. dev-jozko-kukuricudus and checkout into it (you can also check branch dev-mkoplinger as an example)
 
 2. Deploy the argo-cd app
 
