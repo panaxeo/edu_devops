@@ -36,6 +36,17 @@
     kubectl create secret generic gitcred -n {{NAMESPACE}} --from-literal=username=gitea --from-literal=password='{{PASSWORD}}' -o yaml --dry-run=client | kubeseal --format yaml --controller-namespace kubeseal --controller-name sealed-secrets > gitcred-{{NAMESPACE}}.yaml
     ```
 
+    - argocd-initial-admin-secret.yaml in ci namespace
+
+    ```sh
+    (LINUX)
+    kubectl get secret -n argocd argocd-initial-admin-secret -o yaml > argocd.yaml
+
+    nano argocd.yaml # change namespace from argocd to ci
+
+    kubeseal -f argocd.yaml --format yaml --controller-namespace kubeseal --controller-name sealed-secrets > argo-initial-admin-secret.yaml
+    ```
+
 6. Create overlays with your sealed secrets
     - create overlay folder e.g. dev-jozko-kukuricudus
         - k8s/apps/ci/overlays/dev-jozko-kukuricudus
@@ -55,6 +66,7 @@
         - ../dev
         - regcred-ci.yaml
         - gitcred-ci.yaml
+        - argo-initial-admin-secret.yaml
         ```
 
         - k8s/apps/devops-app/overlays/dev-jozko-kukuricudus

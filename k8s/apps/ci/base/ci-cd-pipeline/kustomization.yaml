@@ -11,6 +11,7 @@ resources:
 - workflow-templates/npm-install-template.yaml
 - workflow-templates/npm-lint-template.yaml
 - workflow-templates/npm-test-template.yaml
+- workflow-templates/sync-argocd-app-template.yaml
 - event-source-service.yaml
 - event-source.yaml
 - sensor.yaml
