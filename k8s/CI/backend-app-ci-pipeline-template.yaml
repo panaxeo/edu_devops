@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: backend-app-ci-pipeline-template
+  namespace: argo-development
+spec:
+  entrypoint: backend-app-ci-pipeline
+  templates:
+    - name: backend-app-ci-pipeline
+      inputs:
+        parameters:
+          - name: container_tag
+      dag:
+        tasks:
+          - name: go-install
+            templateRef:
+              name: go-install-template
+              template: go-install
+          - name: go-test
+            templateRef:
+              name: go-test-template
+              template: go-test
+            dependencies: [go-install]
+          - name: go-build
+            templateRef:
+              name: go-build-template
+              template: go-build
+            dependencies: [go-install]
+          
+          # final image push
+          - name: build-push-image
+            arguments:
+              parameters:
+              - name: container_tag
+                value: "{{inputs.parameters.container_tag}}"
+              - name: repo_type
+                value: "backend"
+            templateRef:
+              name: build-push-image-template
+              template: build-push-image
+            dependencies: [go-test, go-build]     

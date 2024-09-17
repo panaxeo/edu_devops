@@ -6,10 +6,13 @@ metadata:
 spec:
   templates:
   - name: clone-repo
+    inputs: 
+      parameters:
+      - name: app-repository # should specify which app_repository are we targeting
     container:
       image: alpine/git
       command: [sh, -c]
-      args: ["git clone http://$GIT_USERNAME:$GIT_PASSWORD@gitea-http.gitea:3000/gitea/frontend-devops-app.git /mnt/clone"]
+      args: ["git clone http://$GIT_USERNAME:$GIT_PASSWORD@gitea-http.gitea:3000/gitea/{{inputs.parameters.app-repository}}.git /mnt/clone"]
       volumeMounts:
       - name: workdir
         mountPath: /mnt/clone

@@ -10,8 +10,12 @@ spec:
     - name: dependency-one
       eventSourceName: webhook
       eventName: example
+    - name: backend-push
+      eventSourceName: webhook
+      eventName: backend-push
   triggers:
     - template:
+        conditions: "dependency-one"
         name: webhook-workflow-trigger
         argoWorkflow:
           operation: submit
@@ -20,15 +24,47 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: ci-pipeline-
+                generateName: ci-pipeline-frontend-push-
               spec:
                 workflowTemplateRef:
                   name: ci-pipeline-template
                 arguments:
                   parameters:
                   - name: container_tag
+                  - name: app-repository
           parameters:
             - src:
                 dependencyName: dependency-one
                 dataKey: body.after
               dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: dependency-one
+                dataKey: body.repository.name
+              dest: spec.arguments.parameters.1.value
+    - template:
+        conditions: "backend-push"
+        name: webhook-workflow-backend-push-trigger
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: ci-pipeline-backend-push-
+              spec:
+                workflowTemplateRef:
+                  name: ci-pipeline-template
+                arguments:
+                  parameters:
+                  - name: container_tag
+                  - name: app-repository
+          parameters:
+            - src:
+                dependencyName: backend-push
+                dataKey: body.after
+              dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: backend-push
+                dataKey: body.repository.name
+              dest: spec.arguments.parameters.1.value

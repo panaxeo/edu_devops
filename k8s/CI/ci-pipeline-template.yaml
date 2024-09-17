@@ -25,38 +25,38 @@ spec:
       inputs:
         parameters:
           - name: container_tag
+          - name: app-repository
       dag:
         tasks:
           - name: clone-repo
+            arguments:
+              parameters:
+                - name: app-repository
+                  value: "{{inputs.parameters.app-repository}}"
             templateRef:
               name: clone-repo-template
               template: clone-repo
-          - name: npm-install
-            templateRef:
-              name: npm-install-template
-              template: npm-install
-            dependencies: [clone-repo]
-          - name: npm-build
-            templateRef:
-              name: npm-build-template
-              template: npm-build
-            dependencies: [npm-install]
-          - name: npm-lint
-            templateRef:
-              name: npm-lint-template
-              template: npm-lint
-            dependencies: [npm-install]
-          - name: npm-test
-            templateRef:
-              name: npm-test-template
-              template: npm-test
-            dependencies: [npm-install]
-          - name: build-push-image
+          
+          # frontend part
+          - name: frontend-app-ci-pipeline
             arguments:
               parameters:
               - name: container_tag
                 value: "{{inputs.parameters.container_tag}}"
             templateRef:
-              name: build-push-image-template
-              template: build-push-image
-            dependencies: [npm-build, npm-lint, npm-test]
+              name: frontend-app-ci-pipeline-template
+              template: frontend-app-ci-pipeline
+            dependencies: [clone-repo]
+            when: "{{=inputs.parameters['app-repository'] == 'frontend-devops-app'}}"
+
+          # backend part
+          - name: backend-app-ci-pipeline
+            arguments:
+              parameters:
+              - name: container_tag
+                value: "{{inputs.parameters.container_tag}}"
+            templateRef:
+              name: backend-app-ci-pipeline-template
+              template: backend-app-ci-pipeline
+            dependencies: [clone-repo]
+            when: "{{=inputs.parameters['app-repository'] == 'backend-devops-app'}}"

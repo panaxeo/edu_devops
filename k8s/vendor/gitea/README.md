@@ -34,7 +34,7 @@ frontend-devops-app
 2. clone new repository outside this repo:
 
     ```sh
-    git clone http://cluster.gitea.local/gitea/frontend-devops-app.git
+    git clone http://cluster.gitea.local:8081/gitea/frontend-devops-app.git
     ```
 
 3. copy our frontend app to cloned repo

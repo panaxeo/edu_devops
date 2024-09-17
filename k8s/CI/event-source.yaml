@@ -12,4 +12,11 @@ spec:
     example:
       port: "12000"
       endpoint: /example
+      method: POST 
+    backend-push:
+      port: "12000"
+      endpoint: /backend-push
       method: POST
+      secure: false
+      events:
+        - push

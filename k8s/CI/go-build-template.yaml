@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: go-build-template
+  namespace: argo-development
+spec:
+  templates:
+  - name: go-build
+    container:
+      image: golang
+      command: [go, build]
+      workingDir: /mnt/clone
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/clone

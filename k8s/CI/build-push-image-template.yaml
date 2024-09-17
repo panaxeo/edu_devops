@@ -4,18 +4,45 @@ metadata:
   name: build-push-image-template
   namespace: argo-development
 spec:
+  entrypoint: build-push-image
   templates:
   - name: build-push-image
     inputs:
       parameters:
+      - name: container_tag    #the tag for the image
+      - name: repo_type        #the repository type (frontend or backend)
+    steps:
+    - - name: push-to-frontend
+        template: kaniko-push
+        when: "{{inputs.parameters.repo_type}} == 'frontend'"
+        arguments:
+          parameters:
+          - name: container_tag
+            value: "{{inputs.parameters.container_tag}}"
+          - name: destination_repo
+            value: "pnxedudevops/apps:frontend"
+    - - name: push-to-backend
+        template: kaniko-push
+        when: "{{inputs.parameters.repo_type}} == 'backend'"
+        arguments:
+          parameters:
+          - name: container_tag
+            value: "{{inputs.parameters.container_tag}}"
+          - name: destination_repo
+            value: "pnxedudevops/apps:backend"
+
+  - name: kaniko-push
+    inputs:
+      parameters:
       - name: container_tag
+      - name: destination_repo
     container:
       image: gcr.io/kaniko-project/executor:debug
       command: [/kaniko/executor]
       args:
       - --context=/mnt/clone
-      - --destination=pnxedudevops/apps:frontend-latest
-      - --destination=pnxedudevops/apps:frontend-{{inputs.parameters.container_tag}}
+      - --destination={{inputs.parameters.destination_repo}}-latest
+      - --destination={{inputs.parameters.destination_repo}}-{{inputs.parameters.container_tag}}
       volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker/
