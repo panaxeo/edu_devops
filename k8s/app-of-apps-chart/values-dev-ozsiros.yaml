@@ -4,6 +4,3 @@ apps:
     overlay: dev-ozsiros
   devopsApp:
     overlay: dev-ozsiros
-  gitea:
-    helmValues:
-    - dev-ozsiros
