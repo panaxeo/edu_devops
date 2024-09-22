@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  generateName: autoremove-old-images-
+spec:
+  entrypoint: autoremove-old-images
+  templates:
+    - name: autoremove-old-images
+      inputs:
+        parameters:
+        - name: repo_type        #the repository type (frontend or backend)
+      steps:
+        - - name: list-images
+            template: list-images
+        - - name: remove-images
+            depends: "list-images"
+            template: remove-images
+            arguments:
+              parameters:
+                - name: images
+                  value: "{{steps.list-images.outputs.result}}"
+
+    - name: list-images
+      script:
+        image: docker:20.10.7
+        command: [sh]
+        volumeMounts:
+        - name: kaniko-secret
+          mountPath: /kaniko/.docker/
+        source: |
+          images=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -E "{{inputs.parameters.repo_type}}-[0-9a-fA-F-]{36}" | grep -v "{{inputs.parameters.repo_type}}-latest")
+          echo $images
+
+    - name: remove-images
+      inputs:
+        parameters:
+          - name: images
+      script:
+        image: docker:20.10.7
+        command: [sh]
+        volumeMounts:
+        - name: kaniko-secret
+          mountPath: /kaniko/.docker/ 
+        source: |
+          for image in {{inputs.parameters.images}}; do
+            docker rmi $image || echo "Failed to remove $image"
+          done

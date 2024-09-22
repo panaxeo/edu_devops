@@ -46,7 +46,7 @@ spec:
             templateRef:
               name: frontend-app-ci-pipeline-template
               template: frontend-app-ci-pipeline
-            dependencies: [clone-repo]
+            depends: "clone-repo.Succeeded"
             when: "{{=inputs.parameters['app-repository'] == 'frontend-devops-app'}}"
 
           # backend part
@@ -58,5 +58,16 @@ spec:
             templateRef:
               name: backend-app-ci-pipeline-template
               template: backend-app-ci-pipeline
-            dependencies: [clone-repo]
+            depends: "clone-repo.Succeeded"
             when: "{{=inputs.parameters['app-repository'] == 'backend-devops-app'}}"
+
+          # remove old images from docker hub
+          - name: autoremove-old-images
+            arguments:
+              parameters:
+              - name: repo_type
+                value: app-repository
+            templateRef:
+              name: autoremove-old-images-
+              template: autoremove-old-images
+            depends: "frontend-app-ci-pipeline.Succeeded || backend-app-ci-pipeline.Succeeded"
