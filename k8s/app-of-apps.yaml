@@ -9,12 +9,12 @@ spec:
   project: default
   source:
     repoURL: https://github.com/panaxeo/edu_devops.git
-    targetRevision: {{TARGET_BRANCH}} # do not commit to main branch
+    targetRevision: dev-ozsiros # do not commit to main branch
     path: k8s/app-of-apps-chart
     helm:
       valueFiles:
       - values-dev.yaml
-      - {{YOUR_VALUES_FILE}} # do not commit to main branch
+      - values-dev-ozsiros.yaml # do not commit to main branch
   destination:
     server: "https://kubernetes.default.svc"
     namespace: argocd
