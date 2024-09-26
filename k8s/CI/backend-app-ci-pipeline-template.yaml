@@ -20,12 +20,12 @@ spec:
             templateRef:
               name: go-test-template
               template: go-test
-            depends: "go-install"
+            dependencies: ["go-install"]
           - name: go-build
             templateRef:
               name: go-build-template
               template: go-build
-            depends: "go-install"
+            dependencies: ["go-install"]
           
           # final image push
           - name: build-push-image
@@ -38,4 +38,4 @@ spec:
             templateRef:
               name: build-push-image-template
               template: build-push-image
-            depends: "go-test && go-build"          
+            dependencies: ["go-test", "go-build"]

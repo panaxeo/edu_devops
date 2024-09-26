@@ -20,17 +20,17 @@ spec:
             templateRef:
               name: npm-build-template
               template: npm-build
-            depends: "npm-install"
+            dependencies: ["npm-install"]
           - name: npm-lint
             templateRef:
               name: npm-lint-template
               template: npm-lint
-            depends: "npm-install"
+            dependencies: ["npm-install"]
           - name: npm-test
             templateRef:
               name: npm-test-template
               template: npm-test
-            depends: "npm-install"
+            dependencies: ["npm-install"]
           
           # final image push
           - name: build-push-image
@@ -43,4 +43,4 @@ spec:
             templateRef:
               name: build-push-image-template
               template: build-push-image
-            depends: "npm-build && npm-lint && npm-test"
+            dependencies: ["npm-build", "npm-lint", "npm-test"]
