@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- workflow-templates/build-push-image-template.yaml
+- workflow-templates/ci-pipeline-template.yaml
+- workflow-templates/clone-app-repo-template.yaml
+- workflow-templates/clone-k8s-repo-template.yaml
+- workflow-templates/update-image-tag-template.yaml
+- workflow-templates/push-changes-template.yaml
+- workflow-templates/npm-build-template.yaml
+- workflow-templates/npm-install-template.yaml
+- workflow-templates/npm-lint-template.yaml
+- workflow-templates/npm-test-template.yaml
+- workflow-templates/sync-argocd-app-template.yaml
+- event-source-service.yaml
+- event-source.yaml
+- sensor.yaml

@@ -1,0 +1,96 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: ci-pipeline-template
+spec:
+  entrypoint: ci-pipeline
+  volumeClaimTemplates:
+    - metadata:
+        name: workdir
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+    - metadata:
+        name: workdir2
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+  volumes:
+    - name: kaniko-secret
+      secret:
+        secretName: regcred
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+  templates:
+    - name: ci-pipeline
+      inputs:
+        parameters:
+          - name: container_tag
+      dag:
+        tasks:
+          - name: clone-app-repo
+            templateRef:
+              name: clone-app-repo-template
+              template: clone-app-repo
+          - name: npm-install
+            templateRef:
+              name: npm-install-template
+              template: npm-install
+            dependencies: [clone-app-repo]
+          - name: npm-build
+            templateRef:
+              name: npm-build-template
+              template: npm-build
+            dependencies: [npm-install]
+          - name: npm-lint
+            templateRef:
+              name: npm-lint-template
+              template: npm-lint
+            dependencies: [npm-install]
+          - name: npm-test
+            templateRef:
+              name: npm-test-template
+              template: npm-test
+            dependencies: [npm-install]
+          - name: clone-k8s-repo
+            templateRef:
+              name: clone-k8s-repo-template
+              template: clone-k8s-repo
+            dependencies: [npm-build, npm-lint, npm-test]
+          - name: build-push-image
+            arguments:
+              parameters:
+              - name: container_tag
+                value: "{{inputs.parameters.container_tag}}"
+            templateRef:
+              name: build-push-image-template
+              template: build-push-image
+            dependencies: [npm-build, npm-lint, npm-test]
+          - name: update-image-tag
+            arguments:
+              parameters:
+              - name: container_tag
+                value: "{{inputs.parameters.container_tag}}"
+            templateRef:
+              name: update-image-tag-template
+              template: update-image-tag
+            dependencies: [clone-k8s-repo, build-push-image]
+          - name: push-changes
+            arguments:
+              parameters:
+              - name: container_tag
+                value: "{{inputs.parameters.container_tag}}"
+            templateRef:
+              name: push-changes-template
+              template: push-changes
+            dependencies: [update-image-tag]
+          - name: sync-argo-cd-app
+            templateRef:
+              name: sync-argo-cd-app-template
+              template: sync-argo-cd-app
+            dependencies: [push-changes]

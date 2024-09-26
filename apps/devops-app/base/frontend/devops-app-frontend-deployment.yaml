@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-app-frontend
+  labels:
+    app.kubernetes.io/name: devops-app-frontend
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  selector:
+    matchLabels:
+      app: devops-app-frontend
+  template:
+    metadata:
+      labels:
+        app: devops-app-frontend
+    spec:
+      containers:
+      - name: devops-app-frontend-container
+        image: pnxedudevops/apps:frontend-latest
+        # imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      # It has to be created manually, check 'create secret' command in README.md
+      - name: regcred
