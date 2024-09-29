@@ -1,4 +1,4 @@
 - op: add
   path: /data
   value: 
-    application.instance-sync.timeout.reconciliation: "60s"
+    timeout.reconciliation: "15s"
