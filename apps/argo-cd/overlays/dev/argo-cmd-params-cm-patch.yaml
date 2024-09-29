@@ -2,3 +2,7 @@
   path: /data
   value:
     server.insecure: "true"
+
+- op: add
+  path: /data/application.instance-sync.timeout.reconciliation
+  value: "60s"
