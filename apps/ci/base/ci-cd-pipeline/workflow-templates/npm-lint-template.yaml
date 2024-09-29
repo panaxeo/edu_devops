@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: npm-lint-template
+spec:
+  templates:
+  - name: npm-lint
+    container:
+      image: node
+      command: [npm, run, lint]
+      workingDir: /mnt/clone/devops-app
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/clone/devops-app
