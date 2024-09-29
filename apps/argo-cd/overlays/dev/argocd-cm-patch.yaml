@@ -1,3 +1,4 @@
 - op: add
-  path: /data/application.instance-sync.timeout.reconciliation
-  value: "60s"
+  path: /data
+  value: 
+    application.instance-sync.timeout.reconciliation: "60s"
