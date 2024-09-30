@@ -1,0 +1,11 @@
+- op: replace #action 
+  path: /spec/template/spec/containers/0/args #resouirce we want to change
+  value: ["server","--auth-mode=server"] #value we want to use for patching
+
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--secure=false"
+
+- op: replace
+  path: /spec/template/spec/containers/0/readinessProbe/httpGet/scheme
+  value: "HTTP"

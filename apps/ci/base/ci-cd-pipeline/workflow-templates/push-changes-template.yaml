@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: push-changes-template
+spec:
+  templates:
+  - name: push-changes
+    inputs:
+      parameters:
+      - name: container_tag
+    container:
+      image: alpine/git
+      command: [sh, -c]
+      workingDir: /mnt/clone/k8s/base/frontend
+      args:
+        - |
+          git config --global user.email "ci-bot@example.com" &&
+          git config --global user.name "ci-bot" &&
+          git add devops-app-frontend-deployment.yaml &&
+          git commit -m "Update image tag to pnxedudevops/apps:frontend-{{inputs.parameters.container_tag}}" &&
+          git push origin main
+      volumeMounts:
+      - name: workdir2
+        mountPath: /mnt/clone/k8s

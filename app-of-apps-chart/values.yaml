@@ -1,0 +1,17 @@
+targetRevision: dev-ozsiros-2
+apps:
+  argoCd:
+    overlay: dev
+  argoEvents:
+    overlay: dev
+  argoWorkflows:
+    overlay: dev
+  ci:
+    overlay: dev
+  devopsApp:
+    overlay: dev
+  gitea:
+    helmValues:
+      - dev-ozsiros-2
+  traefik:
+    overlay: dev-ozsiros-2

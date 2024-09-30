@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/panaxeo/edu_devops.git
+    targetRevision: {{ .Values.targetRevision }}
+    path: apps/gitea
+    helm:
+      valueFiles:
+      - values.yaml
+      {{- range .Values.apps.gitea.helmValues }}
+      - values-{{ . }}.yaml
+      {{- end }}
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: gitea
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

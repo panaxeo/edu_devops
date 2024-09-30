@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: app
+spec:
+  template:
+    serviceAccountName: argo-events
+  dependencies:
+    - name: app
+      eventSourceName: app
+      eventName: app
+  triggers:
+    - template:
+        name: functional-tests-trigger
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: functional-tests-wf-
+              spec:
+                workflowTemplateRef:
+                  name: functional-tests-wf-template
