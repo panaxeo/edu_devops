@@ -1,4 +1,4 @@
-targetRevision: dev-ozsiros-3
+targetRevision: dev-ozsiros-4
 apps:
   argoCd:
     overlay: dev
@@ -12,6 +12,6 @@ apps:
     overlay: dev
   gitea:
     helmValues:
-      - dev-ozsiros-3
+      - dev-ozsiros-4
   traefik:
-    overlay: dev-ozsiros-3
+    overlay: dev-ozsiros-4
