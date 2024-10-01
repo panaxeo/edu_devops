@@ -1,4 +1,4 @@
-targetRevision: dev-ozsiros3
+targetRevision: dev-ozsiros-3
 apps:
   argoCd:
     overlay: dev
