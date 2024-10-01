@@ -11,6 +11,7 @@ apps:
   devopsApp:
     overlay: dev
   gitea:
-    helmValues: []
+    helmValues:
+      - dev-mkoplinger
   traefik:
-    overlay: dev
+    overlay: dev-mkoplinger
