@@ -89,8 +89,8 @@ spec:
               name: push-changes-template
               template: push-changes
             dependencies: [update-image-tag]
-          - name: sync-argo-cd-app
-            templateRef:
-              name: sync-argo-cd-app-template
-              template: sync-argo-cd-app
-            dependencies: [push-changes]
+          # - name: sync-argo-cd-app
+          #   templateRef:
+          #     name: sync-argo-cd-app-template
+          #     template: sync-argo-cd-app
+          #   dependencies: [push-changes]
