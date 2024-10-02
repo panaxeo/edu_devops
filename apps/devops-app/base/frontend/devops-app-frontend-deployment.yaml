@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: devops-app-frontend-container
-        image: pnxedudevops/apps:frontend-latest
+        image: pnxedudevops/apps:frontend-08ac7b3d044632d8bfe2172435ca90f06d965df2
         # imagePullPolicy: Always
         resources:
           limits:
