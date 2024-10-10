@@ -4,22 +4,28 @@ metadata:
   name: clone-app-repo-template
 spec:
   templates:
-  - name: clone-app-repo
-    container:
-      image: alpine/git
-      command: [sh, -c]
-      args: ["git clone http://$GIT_USERNAME:$GIT_PASSWORD@gitea-http.gitea:3000/gitea/frontend-devops-app.git /mnt/clone/devops-app"]
-      volumeMounts:
-      - name: workdir
-        mountPath: /mnt/clone/devops-app
-      env:
-      - name: GIT_USERNAME
-        valueFrom:
-          secretKeyRef:
-            name: gitcred
-            key: username
-      - name: GIT_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: gitcred
-            key: password
+    - name: clone-app-repo
+      inputs:
+        parameters:
+          - name: app-repository # should specify which app repository are we targeting
+      container:
+        image: alpine/git
+        command: [sh, -c]
+        args:
+          [
+            "git clone http://$GIT_USERNAME:$GIT_PASSWORD@gitea-http.gitea:3000/gitea/{{inputs.parameters.app-repository}}.git /mnt/clone/devops-app",
+          ]
+        volumeMounts:
+          - name: workdir
+            mountPath: /mnt/clone/devops-app
+        env:
+          - name: GIT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: gitcred
+                key: username
+          - name: GIT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: gitcred
+                key: password

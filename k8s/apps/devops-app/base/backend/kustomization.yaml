@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - middleware-strip-prefix.yaml
 - devops-app-be-service.yaml
-- devops-app-be-deployment.yaml
+- devops-app-backend-deployment.yaml
