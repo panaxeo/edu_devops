@@ -8,13 +8,15 @@ spec:
     inputs:
       parameters:
       - name: container_tag
+      - name: destination_repo
+      - name: app_deployment_file
     container:
       image: mikefarah/yq:4
       command: [sh, -c]
-      workingDir: /mnt/clone/k8s/base/frontend
+      workingDir: /mnt/clone/k8s/base/{{inputs.parameters.destination_repo}}
       args:
         - |
-          yq eval '.spec.template.spec.containers[0].image = "pnxedudevops/apps:frontend-{{inputs.parameters.container_tag}}"' -i ./devops-app-frontend-deployment.yaml
+          yq eval '.spec.template.spec.containers[0].image = "pnxedudevops/apps:{{inputs.parameters.destination_repo}}-{{inputs.parameters.container_tag}}"' -i ./{{inputs.parameters.app_deployment_file}}
       volumeMounts:
       - name: workdir2
         mountPath: /mnt/clone/k8s

@@ -1,0 +1,114 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: backend-app-ci-pipeline-template
+spec:
+  entrypoint: backend-app-ci-pipeline
+  volumeClaimTemplates:
+    - metadata:
+        name: workdir
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+    - metadata:
+        name: workdir2
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+  volumes:
+    - name: kaniko-secret
+      secret:
+        secretName: regcred
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+  templates:
+    - name: backend-app-ci-pipeline
+      inputs:
+        parameters:
+          - name: container_tag
+          - name: app-repository
+      dag:
+        tasks:
+          #clone the repo
+          - name: clone-repo
+            arguments:
+              parameters:
+                - name: app-repository
+                  value: "{{inputs.parameters.app-repository}}"
+            templateRef:
+              name: clone-app-repo-template
+              template: clone-app-repo
+
+          #do actual CI stuff
+          - name: go-install
+            templateRef:
+              name: go-install-template
+              template: go-install
+            dependencies: [clone-repo]
+
+          - name: go-test
+            templateRef:
+              name: go-test-template
+              template: go-test
+            dependencies: [go-install]
+
+          - name: go-build
+            templateRef:
+              name: go-build-template
+              template: go-build
+            dependencies: [go-install]
+
+          #k8s repo
+          - name: clone-k8s-repo
+            templateRef:
+              name: clone-k8s-repo-template
+              template: clone-k8s-repo
+            dependencies: [go-test, go-build]
+
+          # final image push
+          - name: build-push-image
+            arguments:
+              parameters:
+                - name: container_tag
+                  value: "{{inputs.parameters.container_tag}}"
+                - name: destination_repo
+                  value: "pnxedudevops/apps:backend"
+            templateRef:
+              name: build-push-image-template
+              template: build-push-image
+            dependencies: [go-test, go-build]
+
+          - name: update-image-tag
+            arguments:
+              parameters:
+                - name: container_tag
+                  value: "{{inputs.parameters.container_tag}}"
+                - name: destination_repo
+                  value: backend
+                - name: app_deployment_file
+                  value: devops-app-backend-deployment.yaml
+            templateRef:
+              name: update-image-tag-template
+              template: update-image-tag
+            dependencies: [clone-k8s-repo, build-push-image]
+          - name: push-changes
+            arguments:
+              parameters:
+                - name: container_tag
+                  value: "{{inputs.parameters.container_tag}}"
+                - name: destination_repo
+                  value: backend
+            templateRef:
+              name: push-changes-template
+              template: push-changes
+            dependencies: [update-image-tag]
+          # - name: sync-argo-cd-app
+          #   templateRef:
+          #     name: sync-argo-cd-app-template
+          #     template: sync-argo-cd-app
+          #   dependencies: [push-changes]
