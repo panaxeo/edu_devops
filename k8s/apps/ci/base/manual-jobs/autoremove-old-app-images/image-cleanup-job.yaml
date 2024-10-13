@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: autoremove-old-images-job
+  namespace: ci # Use this namespace as regcred secret is created in ci namespace
+spec:
+  activeDeadlineSeconds: 180
+  ttlSecondsAfterFinished: 60  # Job will be deleted 60 seconds after completion (either failed or successful)
+  template:
+    spec:
+      containers:
+        - name: autoremove-old-images
+          image: pnxedudevops/apps:autoremove-old-images-latest
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: kaniko-secret
+              mountPath: /kaniko/.docker/
+      restartPolicy: Never
+      volumes:
+        - name: kaniko-secret
+          secret: 
+            secretName: regcred
+            items:
+              - key: .dockerconfigjson
+                path: config.json
