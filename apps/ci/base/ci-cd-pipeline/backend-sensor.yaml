@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: backend-webhook
+spec:
+  template:
+    serviceAccountName: operate-workflow-sa
+  dependencies:
+    - name: backend-push
+      eventSourceName: webhook
+      eventName: backend-push
+  triggers:
+    - template:
+        name: webhook-workflow-backend-push-trigger
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: backend-app-ci-pipeline-
+              spec:
+                workflowTemplateRef:
+                  name: backend-app-ci-pipeline-template
+                arguments:
+                  parameters:
+                    - name: container_tag
+                    - name: app-repository
+          parameters:
+            - src:
+                dependencyName: backend-push
+                dataKey: body.after
+              dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: backend-push
+                dataKey: body.repository.name
+              dest: spec.arguments.parameters.1.value

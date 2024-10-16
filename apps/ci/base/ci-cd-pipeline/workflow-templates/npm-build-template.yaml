@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: npm-build-template
+spec:
+  templates:
+  - name: npm-build
+    container:
+      image: node
+      command: [npm, run, build]
+      workingDir: /mnt/clone/devops-app
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/clone/devops-app

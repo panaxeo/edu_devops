@@ -1,0 +1,4 @@
+- op: add
+  path: /data
+  value: 
+    timeout.reconciliation: "15s"
