@@ -20,6 +20,10 @@ RUN npm run build
 # Production stage. It is responsible for serving such artifact using NGINX
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /devops-app/dist /usr/share/nginx/html
+
+# Copy custom NGINX configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 
 # Nginx uses the 'daemon off' directive to run in the foreground
