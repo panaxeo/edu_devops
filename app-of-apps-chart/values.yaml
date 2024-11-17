@@ -1,0 +1,16 @@
+targetRevision: dev-jago
+apps:
+  argoCd:
+    overlay: dev
+  argoEvents:
+    overlay: dev
+  argoWorkflows:
+    overlay: dev
+  ci:
+    overlay: dev
+  devopsApp:
+    overlay: dev
+  gitea:
+    helmValues: []
+  traefik:
+    overlay: dev

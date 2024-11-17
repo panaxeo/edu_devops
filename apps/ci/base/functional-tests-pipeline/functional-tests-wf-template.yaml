@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: functional-tests-wf-template
+spec:
+  entrypoint: functional-tests-wf
+  templates:
+  - name: functional-tests-wf
+    container:
+      image: hello-world

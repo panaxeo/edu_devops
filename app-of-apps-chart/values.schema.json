@@ -1,0 +1,91 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "apps": {
+        "type": "object",
+        "properties": {
+          "argoCd": {
+            "type": "object",
+            "properties": {
+              "overlay": {
+                "type": "string",
+                "description": "The overlay for argoCd (e.g., 'dev')"
+              }
+            },
+            "required": ["overlay"]
+          },
+          "argoEvents": {
+            "type": "object",
+            "properties": {
+              "overlay": {
+                "type": "string",
+                "description": "The overlay for argoEvents (e.g., 'dev')"
+              }
+            },
+            "required": ["overlay"]
+          },
+          "argoWorkflows": {
+            "type": "object",
+            "properties": {
+              "overlay": {
+                "type": "string",
+                "description": "The overlay for argoWorkflows (e.g., 'dev')"
+              }
+            },
+            "required": ["overlay"]
+          },
+          "ci": {
+            "type": "object",
+            "properties": {
+              "overlay": {
+                "type": "string",
+                "description": "The overlay for CI (e.g., 'dev-mkoplinger')"
+              }
+            },
+            "required": ["overlay"]
+          },
+          "devopsApp": {
+            "type": "object",
+            "properties": {
+              "overlay": {
+                "type": "string",
+                "description": "The overlay for devopsApp (e.g., 'dev-mkoplinger')"
+              }
+            },
+            "required": ["overlay"]
+          },
+          "gitea": {
+            "type": "object",
+            "properties": {
+              "helmValues": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "List of helm values for gitea (e.g., 'dev-mkoplinger')"
+                }
+              }
+            },
+            "required": ["helmValues"]
+          },
+          "traefik": {
+            "type": "object",
+            "properties": {
+              "overlay": {
+                "type": "string",
+                "description": "The overlay for traefik (e.g., 'dev-mkoplinger')"
+              }
+            },
+            "required": ["overlay"]
+          }
+        },
+        "required": ["argoCd", "argoEvents", "argoWorkflows", "ci", "devopsApp", "gitea", "traefik"]
+      },
+      "targetRevision": {
+        "type": "string",
+        "description": "Git branch or revision for the environment (e.g., 'dev-mkoplinger')"
+      }
+    },
+    "required": ["apps", "targetRevision"]
+  }
+  

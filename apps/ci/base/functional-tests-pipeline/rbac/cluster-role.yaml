@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argo-events
+rules:
+  - apiGroups:
+      - "apps"
+    verbs:
+      - get
+      - list
+      - watch
+    resources:
+      - replicasets
