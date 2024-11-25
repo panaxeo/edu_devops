@@ -1,0 +1,20 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: enforce-devops-backend-resource-limits
+spec:
+  matchConstraints:
+    resourceRules:
+    - apiGroups: ["apps"]
+      apiVersions: ["v1"]
+      resources: ["deployments"]
+      operations: ["CREATE", "UPDATE"]
+  validations:
+  - expression: |
+      object.metadata.name == "devops-app-backend" &&
+      object.spec.template.spec.containers.all(container,
+        container.name == "devops-app-backend-container" &&
+        has(container.resources.limits.memory) &&
+        has(container.resources.limits.cpu))
+    message: "The 'devops-app-backend-container' must specify both memory and CPU limits."
+  failurePolicy: Fail
