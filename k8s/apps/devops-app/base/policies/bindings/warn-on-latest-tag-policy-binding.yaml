@@ -1,0 +1,13 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: warn-on-latest-tag-binding
+spec:
+  policyName: warn-on-latest-tag
+  matchResources:
+    objectSelector:
+      matchLabels:
+        app.kubernetes.io/name: "devops-app-backend"
+        # app.kubernetes.io/name: "devops-app-frontend"
+  validationActions:
+    - Deny

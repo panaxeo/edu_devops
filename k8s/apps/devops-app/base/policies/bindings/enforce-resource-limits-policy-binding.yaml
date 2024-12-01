@@ -1,9 +1,9 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding
 metadata:
-  name: enforce-devops-backend-binding
+  name: enforce-resource-limits-binding
 spec:
-  policyName: enforce-devops-backend-resource-limits
+  policyName: enforce-resource-limits
   matchResources:
     resourceRules:
       - apiGroups: ["apps"]
@@ -14,5 +14,6 @@ spec:
     objectSelector:
       matchLabels:
         app.kubernetes.io/name: devops-app-backend
+        app.kubernetes.io/name: devops-app-frontend
   validationActions:
-  - Deny
+    - Deny

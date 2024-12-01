@@ -1,0 +1,15 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: enforce-resource-labels
+spec:
+  failurePolicy: Fail
+  validations:
+    - expression: object.metadata.labels["app.kubernetes.io/version"] != null
+      message: "All resources must include 'app.kubernetes.io/version' labels."
+  matchConstraints:
+    resourceRules:
+    - apiGroups: ["apps"]
+      apiVersions: ["v1"]
+      operations: ["CREATE", "UPDATE"]
+      resources: ["deployments", "services"]
