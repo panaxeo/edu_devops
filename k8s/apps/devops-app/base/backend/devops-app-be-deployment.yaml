@@ -24,6 +24,18 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
       imagePullSecrets:
       # It has to be created manually, check 'create secret' command in README.md
       - name: regcred
