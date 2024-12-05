@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: ci-pipeline-template
+  name: frontend-app-ci-pipeline-template
 spec:
-  entrypoint: ci-pipeline
+  entrypoint: frontend-app-ci-pipeline
   volumeClaimTemplates:
     - metadata:
         name: workdir
       spec:
-        accessModes: [ "ReadWriteOnce" ]
+        accessModes: ["ReadWriteOnce"]
         resources:
           requests:
             storage: 1Gi
     - metadata:
         name: workdir2
       spec:
-        accessModes: [ "ReadWriteOnce" ]
+        accessModes: ["ReadWriteOnce"]
         resources:
           requests:
             storage: 1Gi
@@ -27,55 +27,77 @@ spec:
           - key: .dockerconfigjson
             path: config.json
   templates:
-    - name: ci-pipeline
+    - name: frontend-app-ci-pipeline
       inputs:
         parameters:
           - name: container_tag
+          - name: app-repository
       dag:
         tasks:
-          - name: clone-app-repo
+          #clone the repo
+          - name: clone-repo
+            arguments:
+              parameters:
+                - name: app-repository
+                  value: "{{inputs.parameters.app-repository}}"
             templateRef:
               name: clone-app-repo-template
               template: clone-app-repo
+
+          #do actual CI stuff
           - name: npm-install
             templateRef:
               name: npm-install-template
               template: npm-install
-            dependencies: [clone-app-repo]
+            dependencies: [clone-repo]
+
           - name: npm-build
             templateRef:
               name: npm-build-template
               template: npm-build
             dependencies: [npm-install]
+
           - name: npm-lint
             templateRef:
               name: npm-lint-template
               template: npm-lint
             dependencies: [npm-install]
+
           - name: npm-test
             templateRef:
               name: npm-test-template
               template: npm-test
             dependencies: [npm-install]
+
+          #k8s repo
           - name: clone-k8s-repo
             templateRef:
               name: clone-k8s-repo-template
               template: clone-k8s-repo
             dependencies: [npm-build, npm-lint, npm-test]
+
+          # image push
           - name: build-push-image
             arguments:
               parameters:
-              - name: container_tag
-                value: "{{inputs.parameters.container_tag}}"
+                - name: container_tag
+                  value: "{{inputs.parameters.container_tag}}"
+                - name: destination_repo
+                  value: "pnxedudevops/apps:frontend"
             templateRef:
               name: build-push-image-template
               template: build-push-image
             dependencies: [npm-build, npm-lint, npm-test]
+
           - name: update-image-tag
             arguments:
               parameters:
-              - name: container_tag
-                value: "{{inputs.parameters.container_tag}}"
+                - name: container_tag
+                  value: "{{inputs.parameters.container_tag}}"
+                - name: destination_repo
+                  value: frontend
+                - name: app_deployment_file
+                  value: devops-app-frontend-deployment.yaml
             templateRef:
               name: update-image-tag-template
               template: update-image-tag
@@ -83,8 +105,10 @@ spec:
           - name: push-changes
             arguments:
               parameters:
-              - name: container_tag
-                value: "{{inputs.parameters.container_tag}}"
+                - name: container_tag
+                  value: "{{inputs.parameters.container_tag}}"
+                - name: destination_repo
+                  value: frontend
             templateRef:
               name: push-changes-template
               template: push-changes

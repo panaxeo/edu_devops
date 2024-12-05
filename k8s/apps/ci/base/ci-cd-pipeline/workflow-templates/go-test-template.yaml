@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: go-test-template
+spec:
+  templates:
+    - name: go-test
+      container:
+        image: golang
+        command: [go, test]
+        workingDir: /mnt/clone/devops-app
+        volumeMounts:
+          - name: workdir
+            mountPath: /mnt/clone/devops-app

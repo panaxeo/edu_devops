@@ -88,7 +88,7 @@
     - <http://cluster.dev.local:8081/backend> (our backend app)
 
 12. Create webhook in frontend-devops-app repo
-    - URL: <http://webhook-eventsource.ci:12000/example>
+    - URL: <http://webhook-eventsource.ci:12000/frontend-push>
     - HTTP Mehtod: POST
     - ContentType: application/json
 
