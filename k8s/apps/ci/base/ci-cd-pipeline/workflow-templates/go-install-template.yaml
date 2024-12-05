@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: go-install-template
+spec:
+  templates:
+    - name: go-install
+      container:
+        image: golang
+        command: [go, mod, tidy]
+        workingDir: /mnt/clone/devops-app
+        volumeMounts:
+          - name: workdir
+            mountPath: /mnt/clone/devops-app
