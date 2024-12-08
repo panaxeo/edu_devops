@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://github.com/panaxeo/edu_devops.git
     targetRevision: {{ .Values.targetRevision }}
-    path: apps/argo-cd/overlays/{{ .Values.apps.shared.overlay }}
+    path: apps/shared/overlays/{{ .Values.apps.shared.overlay }}
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
