@@ -8,12 +8,12 @@ metadata:
 spec:
   project: default
   source:
-    # repoURL: https://github.com/panaxeo/edu_devops.git        # github
-    # targetRevision: {{ .Values.targetRevision }}              # github
-    # path: apps/devops-app/overlays/{{ .Values.apps.devopsApp.overlay }}  # github
-    repoURL: http://gitea-http.gitea:3000/gitea/k8s.git                # gitea
-    targetRevision: main                                        # gitea
-    path: overlays/{{ .Values.apps.devopsApp.overlay }}         # gitea
+    repoURL: https://github.com/panaxeo/edu_devops.git        # github
+    targetRevision: {{ .Values.targetRevision }}              # github
+    path: apps/devops-app/overlays/{{ .Values.apps.devopsApp.overlay }}  # github
+    # repoURL: http://gitea-http.gitea:3000/gitea/k8s.git                # gitea
+    # targetRevision: main                                        # gitea
+    # path: overlays/{{ .Values.apps.devopsApp.overlay }}         # gitea
   destination:
     server: https://kubernetes.default.svc
     namespace: devops-app

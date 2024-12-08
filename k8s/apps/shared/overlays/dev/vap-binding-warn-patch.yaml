@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/validationActions/0
+  value: "Warn"

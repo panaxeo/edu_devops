@@ -37,5 +37,4 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
       imagePullSecrets:
-      # It has to be created manually, check 'create secret' command in README.md
       - name: regcred
