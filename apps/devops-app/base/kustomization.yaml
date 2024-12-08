@@ -6,6 +6,6 @@ resources:
 - frontend
 - backend
 - regcred.yaml
-- validating-admission-policies/replica-limit.yaml
-- validating-admission-policies/max-replicas.yaml
-- validating-admission-policies/max-replicas-binding.yaml
+- shared/replica-limit.yaml
+- shared/max-replicas.yaml
+- shared/max-replicas-binding.yaml
