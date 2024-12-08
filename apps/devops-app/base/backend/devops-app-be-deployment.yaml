@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-app-backend
+  name: devops-app-backend2
   labels:
     app.kubernetes.io/name: devops-app-backend
     app.kubernetes.io/version: "1.0.0"

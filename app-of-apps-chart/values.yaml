@@ -13,5 +13,7 @@ apps:
   gitea:
     helmValues:
       - dev-mkoplinger
+  shared:
+    overlay: dev
   traefik:
     overlay: dev-mkoplinger
