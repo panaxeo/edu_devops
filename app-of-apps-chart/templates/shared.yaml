@@ -1,21 +1,21 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: shared
-#   namespace: shared
-#   finalizers:
-#     - resources-finalizer.argocd.argoproj.io
-#   annotations:
-#     argocd.argoproj.io/hook: PreSync
-# spec:
-#   project: default
-#   source:
-#     repoURL: https://github.com/panaxeo/edu_devops.git
-#     targetRevision: {{ .Values.targetRevision }}
-#     path: apps/argo-cd/overlays/{{ .Values.apps.shared.overlay }}
-#   destination:
-#     server: https://kubernetes.default.svc
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
-#       prune: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: shared
+  namespace: shared
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/panaxeo/edu_devops.git
+    targetRevision: {{ .Values.targetRevision }}
+    path: apps/argo-cd/overlays/{{ .Values.apps.shared.overlay }}
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
