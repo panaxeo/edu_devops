@@ -4,3 +4,10 @@ commonLabels:
   env: dev
 resources:
 - ../../base
+patches:
+ - target:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingAdmissionPolicyBinding
+      name: required-env-label
+   path: vap-bind-deny-node-port-patch.yaml
