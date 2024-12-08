@@ -13,8 +13,8 @@ spec:
         values:
         - devops-app
         - ci
-    excludeResourceRules:
-    - apiGroups:   [""]
-      apiVersions: ["v1"]
-      operations:  ["CREATE", "UPDATE"]
-      resources:   ["secrets"]
+    # excludeResourceRules:
+    # - apiGroups:   [""]
+    #   apiVersions: ["v1"]
+    #   operations:  ["CREATE", "UPDATE"]
+    #   resources:   ["secrets"]
