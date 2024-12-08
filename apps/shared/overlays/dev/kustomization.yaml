@@ -9,5 +9,5 @@ patches:
       group: admissionregistration.k8s.io
       version: v1
       kind: ValidatingAdmissionPolicyBinding
-      name: required-env-label
+      name: deny-node-port
    path: vap-bind-deny-node-port-patch.yaml

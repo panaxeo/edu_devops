@@ -4,7 +4,7 @@ metadata:
   name: deny-node-port
 spec:
   policyName: deny-node-port
-  validationActions: [Warn]
+  validationActions: [Deny]
   matchResources:
     namespaceSelector:
       matchLabels:
