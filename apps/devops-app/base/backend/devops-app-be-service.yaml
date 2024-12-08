@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/version: "1.0.0"
     env: dev
 spec:
-  type: NodePort
+  # type: NodePort
   selector:
     app: devops-app-backend
   ports:
