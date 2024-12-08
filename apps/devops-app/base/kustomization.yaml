@@ -6,11 +6,6 @@ resources:
 - frontend
 - backend
 - regcred.yaml
-# - replica-limit-crd.yaml
-# - replica-limit.yaml
-# - vap-max-replicas.yaml
-# - vap-bind-max-replicas.yaml
-# - vap-bind-deny-node-port.yaml
-# - vap-deny-node-port.yaml
-# - vap-required-env-label.yaml
-# - vap-bind-required-env-label.yaml
+- validating-admission-policies/replica-limit.yaml
+- validating-admission-policies/max-replicas.yaml
+- validating-admission-policies/max-replicas-binding.yaml
