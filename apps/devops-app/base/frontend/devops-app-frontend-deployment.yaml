@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: devops-app-frontend
     app.kubernetes.io/version: "1.0.0"
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: devops-app-frontend
@@ -24,6 +25,17 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
       imagePullSecrets:
-      # It has to be created manually, check 'create secret' command in README.md
       - name: regcred

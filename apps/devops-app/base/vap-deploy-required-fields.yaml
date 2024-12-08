@@ -1,0 +1,20 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: deploy-required-fields
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+    - apiGroups:   ["apps"]
+      apiVersions: ["v1"]
+      operations:  ["CREATE", "UPDATE"]
+      resources:   ["deployments"]
+  validations:
+  # Enforce Resource Requests and Limits for Deployments
+  - expression: "object.spec.template.spec.containers.all(container, container.resources.requests != null && container.resources.limits != null)"
+    message: "Deployments must specify both resource requests and limits."
+
+  # Enforce Mandatory Readiness and Liveness Probes for Deployments
+  - expression: "object.spec.template.spec.containers.all(container, container.readinessProbe != null && container.livenessProbe != null)"
+    message: "Deployments must have readiness and liveness probes defined."

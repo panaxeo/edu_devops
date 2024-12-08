@@ -2,10 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-app-backend
+  namespace: default
   labels:
     app.kubernetes.io/name: devops-app-backend
     app.kubernetes.io/version: "1.0.0"
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: devops-app-backend
@@ -25,5 +27,4 @@ spec:
         ports:
         - containerPort: 8080
       imagePullSecrets:
-      # It has to be created manually, check 'create secret' command in README.md
       - name: regcred

@@ -1,6 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  env: prod
 resources:
 - frontend
 - backend
 - regcred.yaml
+# - replica-limit-crd.yaml
+# - replica-limit.yaml
+# - vap-max-replicas.yaml
+# - vap-bind-max-replicas.yaml
+# - vap-bind-deny-node-port.yaml
+# - vap-deny-node-port.yaml
+- vap-required-env-label.yaml
+- vap-bind-required-env-label.yaml
