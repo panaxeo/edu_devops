@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: enforce-container-port
+spec:
+  failurePolicy: Fail
+  validations:
+  - expression: >
+      object.metadata.name == "devops-app-backe" &&
+      size(object.spec.template.spec.containers) > 0 &&
+      object.spec.template.spec.containers.all(c, size(c.ports) > 0 && c.ports.all(p, p.containerPort == 8080))
+    message: >
+      Debug: Containers: {{ object.spec.template.spec.containers }}. 
+      Ports: {{ object.spec.template.spec.containers[0].ports }}.
+      Error: All containers must expose port 8080.
+  matchConstraints:
+    resourceRules:
+    - apiGroups: ["apps"]
+      apiVersions: ["v1"]
+      operations: ["CREATE", "UPDATE"]
+      resources: ["deployments"]
