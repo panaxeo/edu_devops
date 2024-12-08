@@ -12,5 +12,5 @@ resources:
 # - vap-bind-max-replicas.yaml
 # - vap-bind-deny-node-port.yaml
 # - vap-deny-node-port.yaml
-- vap-required-env-label.yaml
-- vap-bind-required-env-label.yaml
+# - vap-required-env-label.yaml
+# - vap-bind-required-env-label.yaml
