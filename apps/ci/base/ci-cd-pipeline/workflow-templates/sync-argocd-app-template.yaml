@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: sync-argo-cd-app-template
+spec:
+  templates:
+  - name: sync-argo-cd-app
+    container:
+      image: curlimages/curl:7.73.0
+      env:
+      - name: ARGOCD_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: argocd-initial-admin-secret
+            key: password
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          # Step 1: Authenticate with Argo CD API to get a JWT token
+          ARGOCD_TOKEN=$(curl -s -X POST "http://argocd-server.argocd.svc.cluster.local:80/api/v1/session" \
+            -d "{\"username\":\"admin\",\"password\":\"$ARGOCD_PASSWORD\"}" \
+            -H "Content-Type: application/json" | \
+            sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
+          
+          if [ -z "$ARGOCD_TOKEN" ]; then
+            echo "Failed to login to Argo CD API"
+            exit 1
+          fi
+
+          # Step 2: Trigger Argo CD application sync
+          curl -s -X POST "http://argocd-server.argocd.svc.cluster.local:80/api/v1/applications/devops-app/sync" \
+            -H "Authorization: Bearer $ARGOCD_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{}'
