@@ -5,15 +5,8 @@ metadata:
 spec:
   policyName: enforce-resource-limits
   matchResources:
-    resourceRules:
-      - apiGroups: ["apps"]
-        apiVersions: ["v1"]
-        resources: ["deployments"]
-        operations: ["CREATE", "UPDATE"]
-        scope: "Namespaced"
-    objectSelector:
+    namespaceSelector:
       matchLabels:
-        app.kubernetes.io/name: devops-app-backend
-        app.kubernetes.io/name: devops-app-frontend
+        "kubernetes.io/metadata.name": devops-app
   validationActions:
     - Deny

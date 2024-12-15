@@ -3,16 +3,13 @@ kind: ValidatingAdmissionPolicy
 metadata:
   name: warn-on-latest-tag
 spec:
-  failurePolicy: Fail
+  failurePolicy: Ignore
   validations:
     - expression: "!(object.spec.template.spec.containers[0].image.matches('.*-latest$'))"
-      message: "Warning: Using the 'latest' tag is discouraged. Consider using a version-specific tag."
+      message: "Using the 'latest' tag is discouraged. Consider using a version-specific tag."
   matchConstraints:
     resourceRules:
     - apiGroups: ["apps"]
       apiVersions: ["v1"]
       operations: ["CREATE", "UPDATE"]
       resources: ["deployments"]
-  # auditAnnotations:
-  #   key: warn-on-latest-tag-ann
-  #   valueExpression: "object.spec.template.spec.containers[0].image"
