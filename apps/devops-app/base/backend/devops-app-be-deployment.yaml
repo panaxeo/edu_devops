@@ -4,7 +4,7 @@ metadata:
   name: devops-app-backend
   labels:
     app.kubernetes.io/name: devops-app-backend
-    app.kubernetes.io/version: "1.0.0"
+    #app.kubernetes.io/version: "1.0.0"
 spec:
   selector:
     matchLabels:
@@ -21,7 +21,7 @@ spec:
         resources:
           limits:
             memory: "256Mi"
-            cpu: "500m"
+            #cpu: "500m"
         ports:
         - containerPort: 8080
       imagePullSecrets:

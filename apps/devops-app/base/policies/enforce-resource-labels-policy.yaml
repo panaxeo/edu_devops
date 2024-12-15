@@ -5,8 +5,8 @@ metadata:
 spec:
   failurePolicy: Fail
   validations:
-    - expression: object.metadata.labels["app.kubernetes.io/version"] != null
-      message: "All resources must include 'app.kubernetes.io/version' labels."
+    - expression: object.metadata.labels["app.kubernetes.io/version"] != null && object.metadata.labels["app.kubernetes.io/name"] != null
+      message: "All resources must include 'app.kubernetes.io/version' and 'app.kubernetes.io/name' labels."
   matchConstraints:
     resourceRules:
     - apiGroups: ["apps"]

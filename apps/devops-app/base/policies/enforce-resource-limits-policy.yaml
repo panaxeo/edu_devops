@@ -6,11 +6,9 @@ spec:
   failurePolicy: Fail
   validations:
     - expression: | 
-        (object.metadata.name == "devops-app-backend" || object.metadata.name == "devops-app-frontend") &&
         object.spec.template.spec.containers.all(container,
-        (container.name == "devops-app-backend-container" || container.name == "devops-app-frontend-container") &&
-        has(container.resources.limits.memory) &&
-        has(container.resources.limits.cpu))
+        container.resources == null &&
+        container.resources != null)
       message: "Containers must specify memory and CPU resource limits."
   matchConstraints:
     resourceRules:

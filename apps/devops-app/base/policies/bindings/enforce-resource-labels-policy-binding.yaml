@@ -5,9 +5,11 @@ metadata:
 spec:
   policyName: enforce-resource-labels
   matchResources:
-    objectSelector:
-      matchLabels:
-        app.kubernetes.io/name: "devops-app-backend"
-        app.kubernetes.io/name: "devops-app-frontend"
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values:
+            - devops-app
   validationActions:
     - Deny

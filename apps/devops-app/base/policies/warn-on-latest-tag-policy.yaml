@@ -13,6 +13,3 @@ spec:
       apiVersions: ["v1"]
       operations: ["CREATE", "UPDATE"]
       resources: ["deployments"]
-  # auditAnnotations:
-  #   key: warn-on-latest-tag-ann
-  #   valueExpression: "object.spec.template.spec.containers[0].image"
