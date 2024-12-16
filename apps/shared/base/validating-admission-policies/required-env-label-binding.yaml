@@ -8,13 +8,13 @@ spec:
   matchResources:
     namespaceSelector:
       matchExpressions:
-      - key: kubernetes.io/metadata.name
-        operator: In
-        values:
-        - devops-app
-        - ci
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values:
+            - devops-app
+            - ci
     excludeResourceRules:
-    - apiGroups:   [""]
-      apiVersions: ["v1"]
-      operations:  ["CREATE", "UPDATE"]
-      resources:   ["secrets"]
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["secrets"]

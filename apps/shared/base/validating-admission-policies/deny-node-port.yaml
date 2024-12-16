@@ -6,10 +6,10 @@ spec:
   failurePolicy: Fail
   matchConstraints:
     resourceRules:
-    - apiGroups:   [""]
-      apiVersions: ["v1"]
-      operations:  ["CREATE", "UPDATE"]
-      resources:   ["services"]
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["services"]
   validations:
     - expression: "object.spec.type != 'NodePort'"
       message: "NodePort type services expose ports outside the cluster, which may pose security risks."

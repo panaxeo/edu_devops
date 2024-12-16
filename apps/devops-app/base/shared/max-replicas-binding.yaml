@@ -14,8 +14,8 @@ spec:
         kubernetes.io/metadata.name: devops-app
     objectSelector:
       matchExpressions:
-      - key: app.kubernetes.io/name
-        operator: In
-        values:
-        - devops-app-backend
-        - devops-app-frontend
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+            - devops-app-backend
+            - devops-app-frontend

@@ -8,8 +8,8 @@ spec:
   matchResources:
     namespaceSelector:
       matchExpressions:
-      - key: kubernetes.io/metadata.name
-        operator: In
-        values:
-        - devops-app
-        - ci
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values:
+            - devops-app
+            - ci
