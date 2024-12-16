@@ -18,10 +18,6 @@ spec:
       - name: devops-app-backend-container
         image: pnxedudevops/apps:backend-latest
         # imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
         ports:
         - containerPort: 8080
       imagePullSecrets:
