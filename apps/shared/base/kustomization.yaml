@@ -2,9 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - validating-admission-policies/replica-limit-crd.yaml
-  - validating-admission-policies/required-env-label-binding.yaml
-  - validating-admission-policies/required-env-label.yaml
-  - validating-admission-policies/deny-node-port-binding.yaml
-  - validating-admission-policies/deny-node-port.yaml
-  - validating-admission-policies/deploy-required-fields-binding.yaml
-  - validating-admission-policies/deploy-required-fields.yaml
+  # - validating-admission-policies/required-env-label-binding.yaml
+  # - validating-admission-policies/required-env-label.yaml
+  # - validating-admission-policies/deny-node-port-binding.yaml
+  # - validating-admission-policies/deny-node-port.yaml
+  # - validating-admission-policies/deploy-required-fields-binding.yaml
+  # - validating-admission-policies/deploy-required-fields.yaml
