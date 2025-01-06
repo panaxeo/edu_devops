@@ -19,9 +19,12 @@ spec:
         image: pnxedudevops/apps:frontend-latest
         # imagePullPolicy: Always
         resources:
-          limits:
+          # limits:
+          #   memory: "128Mi"
+          #   cpu: "500m"
+          requests:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
         - containerPort: 8080
         livenessProbe:
