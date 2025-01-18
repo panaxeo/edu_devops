@@ -25,5 +25,5 @@ spec:
     - expression: |
         has(object.metadata.labels) &&
         'app.kubernetes.io/version' in object.metadata.labels &&
-        'app.kubernetes.io/name' in object.metadata.labels &&
-      message: "The 'app.kubernetes.io/version' and 'app.kubernetes.io/name' labels must be set. ."
+        'app.kubernetes.io/name' in object.metadata.labels
+      message: "The 'app.kubernetes.io/version' and 'app.kubernetes.io/name' labels must be set."
