@@ -17,11 +17,11 @@ spec:
       containers:
       - name: devops-app-frontend-container
         image: pnxedudevops/apps:frontend-latest
-        # imagePullPolicy: Always
+        imagePullPolicy: Always
         resources:
-          # limits:
-          #   memory: "128Mi"
-          #   cpu: "500m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
           requests:
             memory: "128Mi"
             cpu: "250m"

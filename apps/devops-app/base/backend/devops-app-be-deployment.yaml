@@ -17,8 +17,27 @@ spec:
       containers:
       - name: devops-app-backend-container
         image: pnxedudevops/apps:backend-latest
-        # imagePullPolicy: Always
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
       imagePullSecrets:
       - name: regcred
