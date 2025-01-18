@@ -1,22 +1,22 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: continuous-integration
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/panaxeo/edu_devops.git
-    targetRevision: {{ .Values.targetRevision }}
-    path: apps/ci/overlays/{{ .Values.apps.ci.overlay }}
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: ci
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
-    syncOptions:
-    - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: continuous-integration
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/panaxeo/edu_devops.git
+#     targetRevision: {{ .Values.targetRevision }}
+#     path: apps/ci/overlays/{{ .Values.apps.ci.overlay }}
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: ci
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+#       prune: true
+#     syncOptions:
+#     - CreateNamespace=true
