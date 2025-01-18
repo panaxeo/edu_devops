@@ -4,6 +4,7 @@ metadata:
   name: devops-app-frontend-2
   namespace: devops-app
   labels:
+    env: dev-mkoplinger
     app.kubernetes.io/name: devops-app-frontend
     app.kubernetes.io/version: "1.0.0"
 spec:

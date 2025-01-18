@@ -7,14 +7,14 @@ metadata:
   namespace: ci
 spec:
   encryptedData:
-    .dockerconfigjson: AgA+eBZE4W2vE+QnHpn27k8FGUl4ZtTFBBXD2MJU9X1BuCKrs4OcYisa1X9TGcYD5nOkrAZVMIoKnWhovykbatLhRm/vZSs7KnUuxorxWYtPhdqg1AWG7sVrQwRcsCA+v4t0WLv3fj+Ed7zsm7uYhtbm7eAs7qYB26ff5aJtvCEuzYg0Utav/zEiY9PK1d3razhpHvkAOOGYlx+wsYXEojotKOM2TJRwUqwUkgwH3srYufEUM+wSDaHYIXRtdnfCmmyLOXPd2+ho/Z/WHVNRUGKAsdIjGdWFhFAvR5nxIzv2kYr9SdfTjX0u4h9KmCMuHcDZA2eG8n4q3JAU5MmJ9GG2u9McupW2a/4cBOxylCwtcKMpYq0HK/ukZQoYTXcRWlUsp+HCDihSxCxcxh9J2QxBfGJQMf2Xi30lZnsU0mdZZHZOvLMZhvV05T7fdLq6IZKrgZpsHhASBi13oP8r7U4GE5dwIHt0QXzoD9h4uwj2hddrhsU6ZZGqgPQyqajI3VXAF2VsnzO8yVa+erwhU9dJFojrH5hS5WNdT3NKUQIpcLvrZ9zHO10WZq1Uq0rPyqUunh6b20UIBWwIEXLOmuAuiVGC6I5lVhitgDs/q4+ZyCFEPUB6MdDcEpun+KvjfcFTiJwrGUu6HXlrG5Zj/odmfsrf0JKfWkDuvP/4U/C2WxJp/lxzCaKfHOq6RoHQzr1FAtAg6suLmss+MzzcfLEe24opsbhEvTlETI0ocwoU+b8VR0oVO3/2HVYVNP6RHTbnW7KakvlYXy+MDJCjJ/UgiK/TIx5jWTEsOO/xIW7t3ixLLt30UBLBwbXrfjhBOcX9EiWpPc+ez9nCseHPj9/S9zqWuCbbkzp7kIDRCuNnd09GCGRrZdRX1Wnl0thEsF9CSgD/O2YI8+oXwr/m2na51oVp13uYQj7FdQ==
+    .dockerconfigjson: AgCHzvXQNn7z2GdgWYhyg646UXYkG1qV1TG8i15v+srAkKzI0fBMw09Nh98Jv8LfP0m52zbEjpZEHJZj7chM51ZxOen7KZAggV0hKcCp8vLaWKpj6+2duYrW+M3xSADoPIwO3vjwtuHYTHgh3/Cgg5preE6az9q68TxQHAsnJ69vXilA4hnUM9Pmge+TMHLnybS2LbH7VEquP45QEpwBYPTF2xKsCb/3Fm/vb3HULNrCitF9UVZRVYgUKjyZpoq/7YSXDQmEzU7GgdG8wHGmClgvTt+l/WiCrF2UANbBrRtVj0fPJaQzYa/DqN8kU7xa9pieQu0FglCJNt34qgWYvY6Fv7A/KheMH0nJgjCQeIP6b8Xgc/btU3kQCQiGAtpCyNUcsKRbbWbgVjAwcDMlqwhQ/49XyVYHXRoIUouu8BYj28g19UF76E+6BgL4BxpFXzj/gDZj2AAwF8z5CjqMubzKVmQUdOAllcAs86pdVY6f0UgGEp1azT8KGnGorc0rc5TeTmUF82fAscaqzFRoahPZ9JsGjpGrmbfLvrHdA7YWfHTPF9U/jotop1b8yl/hgEHhY3jpitXZDltFRrrr9WU6F99ZfU18pvcF7dTAdEUT5it7d33zbRiZlMSZH2ghHtydL1aDH9Y+kePccA6oUCNkkkfHuyiiQdJM+WHLys3N6t9mx7VMMkX2GmlMijIO+90BZfBd5Y2T0qtKQFjTI6K1vNZXb6P18wt7TpUv4yHdnJQfvSE56LjW/SbZdEuhKTN+j+IrSg9EOYbwq5qnUTXRq5pmekQ2EpabJllnspGQ/nKebBlBDPYJ1juiWloxfWVH8TfdBYlKwc+rHHnVRqYdOFppQTPo8ze1dcnXnSpXfC5++n7QIQmCP/bvElVt4XJCdsSXbNNn5W6QoYnImWT+71JAwqt/Z0IwzA==
   template:
     metadata:
       annotations:
         sealedsecrets.bitnami.com/patch: "true"
       creationTimestamp: null
       labels:
-        env: dev-mkoplinger
+        env: dev
       name: regcred
       namespace: ci
     type: kubernetes.io/dockerconfigjson
