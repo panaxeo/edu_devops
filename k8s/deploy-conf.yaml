@@ -14,6 +14,8 @@ envs:
       overlay: dev
     gitea:
       helmValues: []
+    shared:
+      overlay: dev
     traefik:
       overlay: dev
 - name: dev-mkoplinger

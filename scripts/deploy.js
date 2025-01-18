@@ -66,7 +66,7 @@ function mergeValuesFromDeployConfig(envParts) {
 
 
 // Function to create the folder structure based on user selection and deploy-conf.yaml values
-async function createFolderStructure(mergedValues) {
+async function createFolderStructure(mergedValues, baseEnv) {
     const sourceDir = path.join(__dirname, '../k8s');
     const distDir = path.join(sourceDir, 'dist');
     const chartDir = path.join(sourceDir, 'app-of-apps-chart');
@@ -105,7 +105,7 @@ async function createFolderStructure(mergedValues) {
             }
         }
     } else {
-        await handleSecrets(secrets);
+        await handleSecrets(secrets, baseEnv);
     }
 
     // Copy the merged values.yaml to dist/app-of-apps-chart
@@ -339,28 +339,64 @@ function readSecretsConfig() {
 }
 
 // Function to create a docker-registry secret using dynamic properties
-async function createDockerRegistrySecret(secretName, namespace, password, dockerConfig) {
+async function createDockerRegistrySecret(secretName, namespace, password, dockerConfig, baseEnv) {
     const { server, username, email } = dockerConfig;
     const command = `kubectl create secret docker-registry ${secretName} -n ${namespace} \
 --docker-server=${server} \
 --docker-username=${username} \
 --docker-password=${password} \
 --docker-email=${email} \
--o yaml --dry-run=client | kubeseal --format yaml \
---controller-namespace kubeseal --controller-name sealed-secrets`;
+-o yaml --dry-run=client`;
 
-    const sealedSecret = await runCommand(command);
+    // Run the kubectl command to generate the secret YAML
+    const secretYaml = await runCommand(command);
+
+    // Parse the YAML and add the annotation
+    const secretObject = yaml.load(secretYaml);
+    secretObject.metadata.annotations = secretObject.metadata.annotations || {};
+    secretObject.metadata.annotations["sealedsecrets.bitnami.com/patch"] = "true";
+    secretObject.metadata.labels = secretObject.metadata.labels || {};
+    secretObject.metadata.labels["env"] = baseEnv;
+
+    // Convert back to YAML with the annotation
+    const updatedYaml = yaml.dump(secretObject);
+
+    // Use runCommandWithInput to pass the updated YAML to kubeseal
+    const sealedSecret = await runCommandWithInput(
+        "kubeseal",
+        updatedYaml,
+        ["--format", "yaml", "--controller-namespace", "kubeseal", "--controller-name", "sealed-secrets"]
+    );
+
     await saveSealedSecret(namespace, secretName, sealedSecret);  // Save the generated secret
 }
 
 // Function to create a generic secret using dynamic properties from literals
-async function createGenericSecret(secretName, namespace, literals) {
+async function createGenericSecret(secretName, namespace, literals, baseEnv) {
     const literalArgs = literals.map(literal => `--from-literal=${literal.key}=${literal.value}`).join(' ');
     const command = `kubectl create secret generic ${secretName} -n ${namespace} ${literalArgs} \
--o yaml --dry-run=client | kubeseal --format yaml \
---controller-namespace kubeseal --controller-name sealed-secrets`;
+-o yaml --dry-run=client`;
 
-    const sealedSecret = await runCommand(command);
+    // Run the kubectl command to generate the secret YAML
+    const secretYaml = await runCommand(command);
+
+    // Parse the YAML and add the annotation
+    const secretObject = yaml.load(secretYaml);
+    secretObject.metadata.annotations = secretObject.metadata.annotations || {};
+    secretObject.metadata.annotations["sealedsecrets.bitnami.com/patch"] = "true";
+    secretObject.metadata.labels = secretObject.metadata.labels || {};
+    secretObject.metadata.labels["env"] = baseEnv;
+
+    // Convert back to YAML with the annotation
+    const updatedYaml = yaml.dump(secretObject);
+
+    // Use runCommandWithInput to pass the updated YAML to kubeseal
+    const sealedSecret = await runCommandWithInput(
+        "kubeseal",
+        updatedYaml,
+        ["--format", "yaml", "--controller-namespace", "kubeseal", "--controller-name", "sealed-secrets"]
+    );
+
     await saveSealedSecret(namespace, secretName, sealedSecret);  // Save the generated secret
 }
 
@@ -461,14 +497,14 @@ async function readSealedSecret(namespace, secretName) {
 }
 
 
-async function handleSecrets(secrets) {
+async function handleSecrets(secrets, baseEnv) {
     for (const secret of secrets) {
         const { name, type, apps, docker, secretNamespaceRef, literals } = secret;
 
         if (type === 'docker-registry') {
             const password = await promptForPassword(name, apps.join(', '));
             for (const app of apps) {
-                await createDockerRegistrySecret(name, app, password, docker);
+                await createDockerRegistrySecret(name, app, password, docker, baseEnv);
             }
         } else if (type === 'generic') {
             for (const literal of literals)
@@ -478,7 +514,7 @@ async function handleSecrets(secrets) {
             }
 
             for (const app of apps) {
-                await createGenericSecret(name, app, literals);
+                await createGenericSecret(name, app, literals, baseEnv);
             }
         } else if (secretNamespaceRef) {
             for (const app of apps) {
@@ -539,7 +575,7 @@ async function main() {
     const mergedValues = mergeValuesFromDeployConfig(envParts);
     const gitBranch = mergedValues.targetRevision
 
-    await createFolderStructure(mergedValues);
+    await createFolderStructure(mergedValues, envParts[0]);
 
     if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir, { recursive: true });

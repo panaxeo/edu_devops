@@ -1,0 +1,6 @@
+apiVersion: panaxeo.com/v1
+kind: ReplicaLimit
+metadata:
+  name: max-replicas
+spec:
+  maxReplicas: 1

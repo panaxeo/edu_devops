@@ -1,0 +1,23 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: required-env-label
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["services"]
+
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["deployments"]
+  validations:
+    - expression: |
+        has(object.metadata.labels) &&
+        'env' in object.metadata.labels &&
+        object.metadata.labels['env'] in ['dev', 'stage', 'prod']
+      message: "The 'env' label must be set. 'env' label must have one of the following values: 'dev', 'stage', or 'prod'."

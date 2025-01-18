@@ -4,3 +4,6 @@ resources:
 - frontend
 - backend
 - regcred.yaml
+- shared/replica-limit.yaml
+- shared/max-replicas.yaml
+- shared/max-replicas-binding.yaml
