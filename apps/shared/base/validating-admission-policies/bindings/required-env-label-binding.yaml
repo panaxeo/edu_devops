@@ -28,3 +28,8 @@ spec:
         apiVersions: ["v1"]
         operations: ["CREATE", "UPDATE"]
         resources: ["validatingwebhookconfigurations"]
+
+      - apiGroups: ["scheduling.k8s.io"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["priorityclasses"]
