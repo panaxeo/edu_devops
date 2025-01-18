@@ -1,7 +1,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicy
 metadata:
-  name: deploy-required-fields
+  name: deployment-policies
 spec:
   failurePolicy: Fail
   matchConstraints:
@@ -18,3 +18,6 @@ spec:
     # Enforce Mandatory Readiness and Liveness Probes for Deployments
     - expression: "object.spec.template.spec.containers.all(container, container.readinessProbe != null && container.livenessProbe != null)"
       message: "Deployments must have readiness and liveness probes defined."
+
+    - expression: "!(object.spec.template.spec.containers.all(container, container.image.matches('.*-latest$')))"
+      message: "Using the 'latest' tag is discouraged. Consider using a version-specific tag."

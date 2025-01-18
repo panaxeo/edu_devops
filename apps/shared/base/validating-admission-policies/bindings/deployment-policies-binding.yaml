@@ -1,9 +1,9 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding
 metadata:
-  name: deploy-required-fields
+  name: deployment-policies
 spec:
-  policyName: deploy-required-fields
+  policyName: deployment-policies
   validationActions: [Deny]
   matchResources:
     namespaceSelector:
