@@ -15,5 +15,5 @@ patches:
       group: admissionregistration.k8s.io
       version: v1
       kind: ValidatingAdmissionPolicyBinding
-      name: deploy-required-fields
+      name: deployment-policies
     path: vap-binding-warn-patch.yaml
