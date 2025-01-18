@@ -20,8 +20,8 @@ spec:
     - expression: |
         has(object.metadata.labels) &&
         'env' in object.metadata.labels &&
-        (startsWith(object.metadata.labels['env'], 'dev') || 
-        startsWith(object.metadata.labels['env'], 'stage') || 
-        startsWith(object.metadata.labels['env'], 'prod'))
+        (object.metadata.labels['env'].startsWith('dev') || 
+        object.metadata.labels['env'].startsWith('stage') || 
+        object.metadata.labels['env'].startsWith('prod'))
       message: "The 'env' label must be set. 'env' label must stats with one of the following values: 'dev', 'stage', or 'prod'."
       # message: "The 'env' and 'app.kubernetes.io/name' labels must be set. 'env' label must have one of the following values: 'dev', 'stage', or 'prod'."
