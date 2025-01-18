@@ -20,10 +20,10 @@ spec:
         has(object.metadata.labels) &&
         'env' in object.metadata.labels &&
         object.metadata.labels['env'] in ['dev', 'stage', 'prod']
-      message: "The 'env' label must be set. 'env' label must have one of the following values: 'dev', 'stage', or 'prod'."
+      message: "Key 'env' must be present in the labels. Key 'env' must have one of the following values: 'dev', 'stage', or 'prod'."
 
     - expression: |
         has(object.metadata.labels) &&
         'app.kubernetes.io/version' in object.metadata.labels &&
         'app.kubernetes.io/name' in object.metadata.labels
-      message: "The 'app.kubernetes.io/version' and 'app.kubernetes.io/name' labels must be set."
+      message: "Keys 'app.kubernetes.io/name' and 'app.kubernetes.io/version' must be present in the labels."

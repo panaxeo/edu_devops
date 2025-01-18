@@ -6,7 +6,6 @@ metadata:
   labels:
     env: dev
     app.kubernetes.io/name: devops-app-frontend
-    app.kubernetes.io/version: "1.0.0"
 spec:
   selector:
     matchLabels:
