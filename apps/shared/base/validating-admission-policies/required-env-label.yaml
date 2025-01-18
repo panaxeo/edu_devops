@@ -6,10 +6,15 @@ spec:
   failurePolicy: Fail
   matchConstraints:
     resourceRules:
-      - apiGroups: ["*"]
-        apiVersions: ["*"]
+      - apiGroups: [""]
+        apiVersions: ["v1"]
         operations: ["CREATE", "UPDATE"]
-        resources: ["*"]
+        resources: ["services"]
+
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["deployments"]
   validations:
     # 'app.kubernetes.io/name' in object.metadata.labels &&
     - expression: |
