@@ -4,16 +4,16 @@ commonLabels:
   env: dev
 resources:
   - ../../base
-patches:
-  - target:
-      group: admissionregistration.k8s.io
-      version: v1
-      kind: ValidatingAdmissionPolicyBinding
-      name: deny-node-port
-    path: vap-binding-warn-patch.yaml
-  - target:
-      group: admissionregistration.k8s.io
-      version: v1
-      kind: ValidatingAdmissionPolicyBinding
-      name: deploy-required-fields
-    path: vap-binding-warn-patch.yaml
+# patches:
+#   - target:
+#       group: admissionregistration.k8s.io
+#       version: v1
+#       kind: ValidatingAdmissionPolicyBinding
+#       name: deny-node-port
+#     path: vap-binding-warn-patch.yaml
+#   - target:
+#       group: admissionregistration.k8s.io
+#       version: v1
+#       kind: ValidatingAdmissionPolicyBinding
+#       name: deploy-required-fields
+#     path: vap-binding-warn-patch.yaml
