@@ -4,10 +4,17 @@ labels:
   - pairs:
       env: dev
     includeTemplates: true
-    fields:
-    - path: spec/template/metadata/labels
-      kind: SealedSecret
+    # fields:
+    # - path: spec/template/metadata/labels
+    #   kind: SealedSecret
 resources:
 - ../../base
 - frontend
 - backend
+patches:
+  - target:
+      group: bitnami.com
+      version: v1alpha1
+      kind: SealedSecret
+      name: regcred
+    path: env-label-patch.yaml

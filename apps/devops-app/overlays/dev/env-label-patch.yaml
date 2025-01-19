@@ -1,0 +1,4 @@
+- op: add
+  path: /spec/template/metadata/labels
+  value:
+    env: dev
