@@ -1,7 +1,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicy
 metadata:
-  name: required-labels
+  name: required-env-label
 spec:
   failurePolicy: Fail
   matchConstraints:
@@ -18,6 +18,6 @@ spec:
   validations:
     - expression: |
         has(object.metadata.labels) &&
-        'app.kubernetes.io/version' in object.metadata.labels &&
-        'app.kubernetes.io/name' in object.metadata.labels
-      message: "Keys 'app.kubernetes.io/name' and 'app.kubernetes.io/version' must be present in the labels."
+        'env' in object.metadata.labels &&
+        object.metadata.labels['env'] in ['dev', 'stage', 'prod']
+      message: "The 'env' label must be set. 'env' label must have one of the following values: 'dev', 'stage', or 'prod'."
