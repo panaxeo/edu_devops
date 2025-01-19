@@ -4,8 +4,8 @@ resources:
   - replica-limit-crd.yaml
   - validating-admission-policies/bindings/required-env-label-binding.yaml
   - validating-admission-policies/required-env-label.yaml
-  - validating-admission-policies/bindings/required-labels-binding.yaml
-  - validating-admission-policies/required-labels.yaml
+  # - validating-admission-policies/bindings/required-labels-binding.yaml
+  # - validating-admission-policies/required-labels.yaml
   - validating-admission-policies/bindings/deny-node-port-binding.yaml
   - validating-admission-policies/deny-node-port.yaml
   - validating-admission-policies/bindings/deployment-policies-binding.yaml

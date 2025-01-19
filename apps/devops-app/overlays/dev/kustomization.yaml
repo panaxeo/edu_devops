@@ -4,6 +4,9 @@ labels:
   - pairs:
       env: dev
     includeTemplates: true
+    fields:
+    - path: spec/template/metadata/labels
+      kind: SealedSecret
 resources:
 - ../../base
 - frontend
