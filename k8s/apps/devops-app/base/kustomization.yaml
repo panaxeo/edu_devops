@@ -4,3 +4,16 @@ resources:
 - frontend
 - backend
 - regcred.yaml
+
+- shared/replica-limit.yaml
+- shared/replica-limit-crd.yaml
+
+- shared/validating-admission-policies/max-replicas.yaml
+- shared/validating-admission-policies/required-env-label.yaml
+- shared/validating-admission-policies/required-labels.yaml
+- shared/validating-admission-policies/deployment-policies.yaml
+
+- shared/validating-admission-policies/bindings/max-replicas-binding.yaml
+- shared/validating-admission-policies/bindings/required-env-label-binding.yaml
+- shared/validating-admission-policies/bindings/required-labels-binding.yaml
+- shared/validating-admission-policies/bindings/deployment-policies-binding.yaml

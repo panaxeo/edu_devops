@@ -75,10 +75,12 @@
 
 9. Create gitea repositories (<http://cluster.gitea.local:8081>)
     - create frontend-devops-app repo
+    - create backend-devops-app repo
     - create k8s repo
 
 10. Copy and push code to new gitea repositories:
     - copy all files from ./src/frontend/* (do not copy node_modules or dist) to frontend-devops-app repo
+    - copy all files from ./src/backend/* to backend-devops-app repo
     - copy all files from ./k8s/dist/apps/devops-app/* to k8s repo
     - push changes in both repos
 
@@ -87,16 +89,22 @@
     - <http://cluster.dev.local:8081/frontend> (our frontend app)
     - <http://cluster.dev.local:8081/backend> (our backend app)
 
-12. Create webhook in frontend-devops-app repo
-    - URL: <http://webhook-eventsource.ci:12000/frontend-push>
-    - HTTP Mehtod: POST
-    - ContentType: application/json
+12. Create webhook
+    - frontend-devops-app repo
+        - URL: <http://webhook-eventsource.ci:12000/frontend-push>
+        - HTTP Mehtod: POST
+        - ContentType: application/json
+    - backend-devops-app repo
+        - URL: <http://webhook-eventsource.ci:12000/backend-push>
+        - HTTP Mehtod: POST
+        - ContentType: application/json
 
-13. Try pipeline by pushing new changes to frontend-devops-app repo. It should run the pipeline and deploy new version of application.
+13. Try pipeline by pushing new changes to frontend-devops-app and backend-devops-app repos. It should run the pipelines and deploy new versions of applications.
     - you can see pipeline progress on argo-workflows ui <http://cluster.argowf.local:8081>
 
-14. Check if new version of frontend app was deployed
+14. Check if new versions were deployed
     - <http://cluster.dev.local:8081/frontend>
+    - <http://cluster.dev.local:8081/backend>
 
 15. (Recommended) Push your new configuration (./k8s/deploy-conf.yaml) to main
 

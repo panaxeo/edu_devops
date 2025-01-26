@@ -1,0 +1,23 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: required-labels
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["services"]
+
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["deployments"]
+  validations:
+    - expression: |
+        has(object.metadata.labels) &&
+        'app.kubernetes.io/version' in object.metadata.labels &&
+        'app.kubernetes.io/name' in object.metadata.labels
+      message: "Keys 'app.kubernetes.io/name' and 'app.kubernetes.io/version' must be present in the labels."

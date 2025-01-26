@@ -1,6 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+labels:
+  - pairs:
+      env: dev
+    includeTemplates: true
 resources:
 - ../../base
 - frontend
 - backend
+patches:
+  - target:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingAdmissionPolicyBinding
+      name: deployment-policies
+    path: vap-binding-warn-patch.yaml
+
+  - target:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingAdmissionPolicyBinding
+      name: required-labels
+    path: vap-binding-warn-patch.yaml
