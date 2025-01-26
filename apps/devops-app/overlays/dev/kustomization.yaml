@@ -8,3 +8,17 @@ resources:
 - ../../base
 - frontend
 - backend
+patches:
+  - target:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingAdmissionPolicyBinding
+      name: deployment-policies
+    path: vap-binding-warn-patch.yaml
+
+  - target:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingAdmissionPolicyBinding
+      name: required-labels
+    path: vap-binding-warn-patch.yaml
