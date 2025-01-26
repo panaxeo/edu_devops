@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
 - middleware-add-trailing-slash.yaml
 - middleware-strip-prefix.yaml
-# - devops-app-frontend-service.yaml
-# - devops-app-frontend-deployment.yaml
+- devops-app-frontend-service.yaml
+- devops-app-frontend-deployment.yaml

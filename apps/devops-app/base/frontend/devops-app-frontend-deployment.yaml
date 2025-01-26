@@ -3,11 +3,9 @@ kind: Deployment
 metadata:
   name: devops-app-frontend
   labels:
-    env: dev
     app.kubernetes.io/name: devops-app-frontend
     app.kubernetes.io/version: "1.0.0"
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: devops-app-frontend
