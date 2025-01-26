@@ -3,4 +3,4 @@ kind: ReplicaLimit
 metadata:
   name: max-replicas
 spec:
-  maxReplicas: 1
+  maxReplicas: 2

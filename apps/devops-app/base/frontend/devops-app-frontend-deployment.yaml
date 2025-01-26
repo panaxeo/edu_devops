@@ -4,10 +4,10 @@ metadata:
   name: devops-app-frontend
   labels:
     env: dev
-  #   app.kubernetes.io/name: devops-app-frontend
-  #   app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/name: devops-app-frontend
+    app.kubernetes.io/version: "1.0.0"
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: devops-app-frontend
@@ -20,26 +20,26 @@ spec:
       - name: devops-app-frontend-container
         image: pnxedudevops/apps:frontend-latest
         imagePullPolicy: Always
-        # resources:
-        #   limits:
-        #     memory: "128Mi"
-        #     cpu: "500m"
-        #   requests:
-        #     memory: "128Mi"
-        #     cpu: "250m"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
         ports:
         - containerPort: 8080
-        # livenessProbe:
-        #   httpGet:
-        #     path: /healthz
-        #     port: 80
-        #   initialDelaySeconds: 10
-        #   periodSeconds: 5
-        # readinessProbe:
-        #   httpGet:
-        #     path: /healthz
-        #     port: 80
-        #   initialDelaySeconds: 5
-        #   periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
       imagePullSecrets:
       - name: regcred

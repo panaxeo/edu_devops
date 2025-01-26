@@ -14,5 +14,5 @@ spec:
         operations: ["CREATE", "UPDATE"]
         resources: ["deployments"]
   validations:
-    - expression: "object.spec.replicas >= params.spec.maxReplicas"
+    - expression: "object.spec.replicas <= params.spec.maxReplicas"
       messageExpression: "'The number of replicas must not exceed ' + string(params.spec.maxReplicas)"
