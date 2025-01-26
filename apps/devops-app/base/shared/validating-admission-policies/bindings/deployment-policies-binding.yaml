@@ -1,16 +1,14 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding
 metadata:
-  name: required-labels
+  name: deployment-policies
 spec:
-  policyName: required-labels
+  policyName: deployment-policies
   validationActions: [Deny]
-  matchResources: # does not filter cluster scoped resources
-    namespaceSelector:
+  matchResources:
+    namespaceSelector: # does not filter cluster scoped resources
       matchExpressions:
         - key: kubernetes.io/metadata.name
           operator: In
           values:
             - devops-app
-            - ci
-            - shared

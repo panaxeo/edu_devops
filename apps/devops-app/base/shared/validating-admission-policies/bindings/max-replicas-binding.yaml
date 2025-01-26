@@ -9,7 +9,7 @@ spec:
     name: max-replicas
     parameterNotFoundAction: Deny
   matchResources:
-    namespaceSelector:
+    namespaceSelector: # does not filter cluster scoped resources
       matchLabels:
         kubernetes.io/metadata.name: devops-app
     objectSelector:
