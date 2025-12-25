@@ -61,17 +61,27 @@
     <node IP> cluster.argowf.local
     <node IP> cluster.dev.local
     <node IP> cluster.gitea.local
+    <node IP> cluster.grafana.local
     ```
 
     - now you can visit following URLs:
         - <http://cluster.traefik.local:8081> (state of cluster networking)
         - <http://cluster.argocd.local:8081> (state of applications)
             - username: admin
-            - password: kubectl get secret -n argocd argocd-initial-admin-secret -o yaml (then decode the password on linux: echo {{PASSWORD}} | base64 -d)
+            - password: kubectl get secret -n argocd argocd-initial-admin-secret -o yaml
+                - then decode the password:
+                    - linux: echo {{PASSWORD}} | base64 -d
+                    - js console: atob({{PASSWORD}})
         - <http://cluster.argowf.local:8081> (state of pipelines)
         - <http://cluster.gitea.local:8081> (gitea version control provider)
             - username: gitea
             - password: provided to deploy.js script as gitcred secret
+        - <http://cluster.grafana.local:8081> (logs/monitoring)
+            - username: admin
+            - password: kubectl get secret -n monitoring grafana -o yaml
+                - then decode the password:
+                    - linux: echo {{PASSWORD}} | base64 -d
+                    - js console: atob({{PASSWORD}})
 
 9. Create gitea repositories (<http://cluster.gitea.local:8081>)
     - create frontend-devops-app repo

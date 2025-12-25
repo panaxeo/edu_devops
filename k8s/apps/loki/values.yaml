@@ -1,0 +1,43 @@
+loki:
+  deploymentMode: SingleBinary
+
+  loki:
+    commonConfig:
+      replication_factor: 1
+    storage:
+      type: filesystem
+      bucketNames:
+        chunks: chunks
+        ruler: ruler
+        admin: admin
+    schemaConfig:
+      configs:
+        - from: "2024-01-01"
+          store: tsdb
+          object_store: filesystem
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 24h
+
+  singleBinary:
+    replicas: 1
+    persistence:
+      enabled: true
+      size: 2Gi
+
+  # --- THIS IS THE FIX ---
+  # Explicitly disable the Simple Scalable components 
+  # which are enabled by default in Chart v6
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+  # -----------------------
+
+  gateway:
+    enabled: false
+  minio:
+    enabled: false

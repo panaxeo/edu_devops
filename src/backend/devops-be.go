@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-contrib/cors"
@@ -8,6 +9,8 @@ import (
 )
 
 func getMessage() string {
+	log.Println("Welcome from Go log!")
+
 	return "Welcome from Go!"
 }
 

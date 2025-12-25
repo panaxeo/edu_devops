@@ -2,6 +2,8 @@ envs:
 - name: dev
   targetRevision: main
   apps:
+    alloy:
+      helmValues: []
     argoCd:
       overlay: dev
     argoEvents:
@@ -13,6 +15,10 @@ envs:
     devopsApp:
       overlay: dev
     gitea:
+      helmValues: []
+    grafana:
+      helmValues: []
+    loki:
       helmValues: []
     shared:
       overlay: dev
