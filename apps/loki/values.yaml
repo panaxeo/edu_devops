@@ -1,21 +1,22 @@
 loki:
-  # Add this section to satisfy the Helm validation check
-  storage:
-    type: filesystem
-    bucketNames:
-      chunks: chunks
-      ruler: ruler
-      admin: admin
+  loki:
+    # Add this section to satisfy the Helm validation check
+    storage:
+      type: filesystem
+      bucketNames:
+        chunks: chunks
+        ruler: ruler
+        admin: admin
 
-  commonConfig:
-    replication_factor: 1
+    commonConfig:
+      replication_factor: 1
 
-  schemaConfig:
-    configs:
-      - from: "2024-01-01"
-        store: tsdb       # Note: 'tsdb' is highly recommended over boltdb-shipper in v6.x
-        object_store: filesystem
-        schema: v13       # Note: 'v13' is the recommended schema for v6.x
-        index:
-          prefix: loki_index_
-          period: 24h
+    schemaConfig:
+      configs:
+        - from: "2024-01-01"
+          store: tsdb       # Note: 'tsdb' is highly recommended over boltdb-shipper in v6.x
+          object_store: filesystem
+          schema: v13       # Note: 'v13' is the recommended schema for v6.x
+          index:
+            prefix: loki_index_
+            period: 24h
