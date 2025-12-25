@@ -1,53 +1,43 @@
-loki: # This matches the 'name' in your Chart.yaml dependencies
+loki:
   deploymentMode: SingleBinary
 
   loki:
     commonConfig:
       replication_factor: 1
-    
-    # This section bypasses the "Please define loki.storage.bucketNames.chunks" error
     storage:
       type: filesystem
       bucketNames:
         chunks: chunks
         ruler: ruler
         admin: admin
-    
     schemaConfig:
       configs:
         - from: "2024-01-01"
-          store: tsdb       # Newer, faster index format for v6
+          store: tsdb
           object_store: filesystem
-          schema: v13       # Recommended schema for Loki 3.x
+          schema: v13
           index:
             prefix: loki_index_
             period: 24h
 
-  # Ensures only one pod runs for your test environment
   singleBinary:
     replicas: 1
     persistence:
       enabled: true
-      size: 10Gi  # Adjust as needed so logs survive restarts
+      size: 10Gi
 
-  # Disable components you aren't using to keep the install clean
+  # --- THIS IS THE FIX ---
+  # Explicitly disable the Simple Scalable components 
+  # which are enabled by default in Chart v6
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+  # -----------------------
+
   gateway:
     enabled: false
   minio:
     enabled: false
-  sidecar:
-    rules:
-      enabled: false
-
-  # Disable the monitoring components that caused your CRD errors
-  monitoring:
-    dashboards:
-      enabled: false
-    rules:
-      enabled: false
-    serviceMonitor:
-      enabled: false
-    selfMonitoring:
-      enabled: false
-      grafanaAgent:
-        installOperator: false
