@@ -1,5 +1,7 @@
 targetRevision: dev-mkoplinger
 apps:
+  alloy:
+    helmValues: []
   argoCd:
     overlay: dev
   argoEvents:
@@ -13,6 +15,10 @@ apps:
   gitea:
     helmValues:
       - dev-mkoplinger
+  grafana:
+    helmValues: []
+  loki:
+    helmValues: []
   shared:
     overlay: dev
   traefik:
